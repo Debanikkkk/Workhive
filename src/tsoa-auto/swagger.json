@@ -1,0 +1,841 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"ResRole": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"roleName": {
+						"type": "string"
+					},
+					"roleDescription": {
+						"type": "string"
+					},
+					"permission": {
+						"items": {
+							"$ref": "#/components/schemas/ResPermission"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResPermission": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"permission_name": {
+						"type": "string"
+					},
+					"permission_description": {
+						"type": "string"
+					},
+					"role": {
+						"items": {
+							"$ref": "#/components/schemas/ResRole"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResCompany": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"logo_url": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResBranch": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"company": {
+						"$ref": "#/components/schemas/ResCompany"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResDepartment": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"branch": {
+						"$ref": "#/components/schemas/ResBranch"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResEmployee": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"username": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"department": {
+						"$ref": "#/components/schemas/ResDepartment"
+					},
+					"branch": {
+						"$ref": "#/components/schemas/ResBranch"
+					},
+					"company": {
+						"$ref": "#/components/schemas/ResCompany"
+					},
+					"role": {
+						"$ref": "#/components/schemas/ResRole"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ReqEmployee": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"username": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"department": {
+						"type": "number",
+						"format": "double"
+					},
+					"branch": {
+						"type": "number",
+						"format": "double"
+					},
+					"company": {
+						"type": "number",
+						"format": "double"
+					},
+					"role": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserLoginCompany": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"logo_url": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"logo_url"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserLoginRole": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"role_name": {
+						"type": "string"
+					},
+					"role_description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"role_name",
+					"role_description"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResUserLogin": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"company": {
+						"$ref": "#/components/schemas/UserLoginCompany"
+					},
+					"branch": {
+						"$ref": "#/components/schemas/ResBranch"
+					},
+					"department": {
+						"$ref": "#/components/schemas/ResDepartment"
+					},
+					"permissions": {
+						"items": {
+							"$ref": "#/components/schemas/ResPermission"
+						},
+						"type": "array"
+					},
+					"role": {
+						"$ref": "#/components/schemas/UserLoginRole"
+					},
+					"token": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"company",
+					"branch",
+					"department",
+					"role"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"EmpLogin": {
+				"properties": {
+					"username": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"username",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResError": {
+				"properties": {
+					"error": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"error"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResSuccess": {
+				"properties": {
+					"result": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"result"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ReqCompany": {
+				"properties": {
+					"logo_url": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"Api-Token": {
+				"type": "apiKey",
+				"name": "x-api-key",
+				"in": "header"
+			}
+		}
+	},
+	"info": {
+		"title": "WorkHive APIs",
+		"version": "0.0.1",
+		"description": "WorkhiveServer",
+		"contact": {}
+	},
+	"paths": {
+		"/role/{roleId}": {
+			"delete": {
+				"operationId": "DeleteRole",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"result": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"result"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Role"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "roleId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/role": {
+			"get": {
+				"operationId": "GetAllRoles",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ResRole"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Role"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/employee": {
+			"get": {
+				"operationId": "GetAllEmployeeBranch",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ResEmployee"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Employee"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "SaveEmployee",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResEmployee"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Employee"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReqEmployee"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/employee/login": {
+			"post": {
+				"operationId": "UserLogin",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResUserLogin"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Employee"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/EmpLogin"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/company/{companyId}/branch/{branchId}/department": {
+			"get": {
+				"operationId": "GetAllDepartments",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ResDepartment"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Department"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "companyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "branchId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/company/{companyId}/branch/{branchId}/department/{departmentId}": {
+			"get": {
+				"operationId": "GetOneDepartment",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ResDepartment"
+										},
+										{
+											"$ref": "#/components/schemas/ResError"
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Department"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "companyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "branchId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "departmentId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/company": {
+			"get": {
+				"operationId": "GetAllCompanies",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ResCompany"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Company"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "SaveCompany",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResCompany"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Company"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReqCompany"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/company/{companyId}": {
+			"get": {
+				"operationId": "GetOneCompany",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ResCompany"
+										},
+										{
+											"$ref": "#/components/schemas/ResError"
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Company"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "companyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeleteCompany",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResSuccess"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Company"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "companyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/company/{companyId}/branch": {
+			"get": {
+				"operationId": "GetAllBranch",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ResBranch"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Branch"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "companyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/company/{companyId}/branch/{branchId}": {
+			"get": {
+				"operationId": "GetOneBranch",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ResBranch"
+										},
+										{
+											"$ref": "#/components/schemas/ResError"
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Branch"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "branchId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "companyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeleteBranch",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResSuccess"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Branch"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "branchId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "companyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	],
+	"tagsSorter": "alpha",
+	"apisSorter": "alpha",
+	"operationsSorter": "method"
+}
