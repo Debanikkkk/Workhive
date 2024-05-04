@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Path, Route, Tags } from "tsoa";
+import { Body, Controller, Get, Path, Post, Route, Tags } from "tsoa";
 import { AppDataSource } from "../data-source";
 import { Department } from "../entity/Department";
 import { Branch } from "../entity/Branch";
@@ -102,7 +102,7 @@ export class DepartmentController extends Controller {
 
         return Promise.resolve({ result: 'DEPARTMENT SUCCESSFULLY DELETED' })
     }
-
+    @Post()
     public async saveDepartment(@Path() companyId: number, @Path() branchId: number, @Body() request: ReqDepartment): Promise<ResDepartment> {
         const branch = await this.branchrepository.findOne({
             where: {
@@ -119,9 +119,9 @@ export class DepartmentController extends Controller {
         if (!branch) {
             return Promise.reject(new Error('BRANCH NOT FOUND'))
         }
-        const { id, name, status } = request
+        const { name, status } = request
         const departmentToSave: Department = {
-            id: id,
+
             branch: branch,
             name: name,
             status: status

@@ -142,12 +142,57 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"ReqEmployee": {
+			"ResLeaveRequest": {
 				"properties": {
 					"id": {
 						"type": "number",
 						"format": "double"
 					},
+					"from_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"to_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"reason": {
+						"type": "string"
+					},
+					"employee": {
+						"$ref": "#/components/schemas/ResEmployee"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ReqLeaveRequest": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"from_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"to_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"reason": {
+						"type": "string"
+					},
+					"employee": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ReqEmployee": {
+				"properties": {
 					"firstName": {
 						"type": "string"
 					},
@@ -290,6 +335,22 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"ReqDepartment": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"branch": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
 			"ResSuccess": {
 				"properties": {
 					"result": {
@@ -309,6 +370,22 @@
 					},
 					"name": {
 						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ReqBranch": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"company": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"type": "object",
@@ -395,7 +472,39 @@
 				"parameters": []
 			}
 		},
-		"/employee": {
+		"/leaveRequest": {
+			"post": {
+				"operationId": "LeaveRequest",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResLeaveRequest"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leave_Request"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReqLeaveRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/company/{companyId}/branch/{branchId}/department/{departmentId}/employee": {
 			"get": {
 				"operationId": "GetAllEmployeeBranch",
 				"responses": {
@@ -450,7 +559,7 @@
 				}
 			}
 		},
-		"/employee/login": {
+		"/company/{companyId}/branch/{branchId}/department/{departmentId}/employee/login": {
 			"post": {
 				"operationId": "UserLogin",
 				"responses": {
@@ -524,6 +633,55 @@
 						}
 					}
 				]
+			},
+			"post": {
+				"operationId": "SaveDepartment",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResDepartment"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Department"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "companyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "branchId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReqDepartment"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/company/{companyId}/branch/{branchId}/department/{departmentId}": {
@@ -740,6 +898,46 @@
 						}
 					}
 				]
+			},
+			"post": {
+				"operationId": "SaveBranch",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResBranch"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Branch"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "companyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReqBranch"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/company/{companyId}/branch/{branchId}": {

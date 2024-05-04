@@ -4,28 +4,28 @@ import { Permission } from "./Permission";
 // import { SubOEM } from "./SubOEM";
 
 @Entity()
-export class Role{
+export class Role {
     @PrimaryGeneratedColumn()
     id?: number
 
     @Column({
         length: 64,
     })
-    roleName?: string
+    role_name?: string
 
     @Column({
         length: 64,
     })
-    roleDescription?: string
+    role_description?: string
 
-    @OneToMany(()=> Employee, Employee=>{Employee.role})
+    @OneToMany(() => Employee, Employee => { Employee.role })
     employee?: Employee[]
 
-    @ManyToMany(()=>Permission, (Permission)=>{Permission.roles})
+    @ManyToMany(() => Permission, (Permission) => { Permission.roles })
     @JoinTable({
-        name: 'rolePermission',
-        joinColumn: {name: 'roleId'},
-        inverseJoinColumn:{name: 'permissionId'}
+        name: 'role_permission',
+        joinColumn: { name: 'role_id' },
+        inverseJoinColumn: { name: 'permission_id' }
     })
     permissions?: Permission[]
 

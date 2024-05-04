@@ -5,6 +5,8 @@ import { TsoaRoute, fetchMiddlewares, ExpressTemplateService } from '@tsoa/runti
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { RoleController } from './../controller/RoleController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { LeaveRequestController } from './../controller/LeaveRequestController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { EmployeeController } from './../controller/EmployeeController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { DepartmentController } from './../controller/DepartmentController';
@@ -93,10 +95,33 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ReqEmployee": {
+    "ResLeaveRequest": {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double"},
+            "from_date": {"dataType":"datetime"},
+            "to_date": {"dataType":"datetime"},
+            "reason": {"dataType":"string"},
+            "employee": {"ref":"ResEmployee"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ReqLeaveRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "from_date": {"dataType":"datetime"},
+            "to_date": {"dataType":"datetime"},
+            "reason": {"dataType":"string"},
+            "employee": {"dataType":"double"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ReqEmployee": {
+        "dataType": "refObject",
+        "properties": {
             "firstName": {"dataType":"string"},
             "lastName": {"dataType":"string"},
             "status": {"dataType":"boolean"},
@@ -161,6 +186,16 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ReqDepartment": {
+        "dataType": "refObject",
+        "properties": {
+            "name": {"dataType":"string"},
+            "status": {"dataType":"boolean"},
+            "branch": {"dataType":"double"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ResSuccess": {
         "dataType": "refObject",
         "properties": {
@@ -174,6 +209,16 @@ const models: TsoaRoute.Models = {
         "properties": {
             "logo_url": {"dataType":"string"},
             "name": {"dataType":"string"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ReqBranch": {
+        "dataType": "refObject",
+        "properties": {
+            "name": {"dataType":"string"},
+            "status": {"dataType":"boolean"},
+            "company": {"dataType":"double"},
         },
         "additionalProperties": false,
     },
@@ -247,7 +292,38 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/employee',
+        app.post('/leaveRequest',
+            ...(fetchMiddlewares<RequestHandler>(LeaveRequestController)),
+            ...(fetchMiddlewares<RequestHandler>(LeaveRequestController.prototype.LeaveRequest)),
+
+            async function LeaveRequestController_LeaveRequest(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"body","name":"request","required":true,"ref":"ReqLeaveRequest"},
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new LeaveRequestController();
+
+              await templateService.apiHandler({
+                methodName: 'LeaveRequest',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/company/:companyId/branch/:branchId/department/:departmentId/employee',
             ...(fetchMiddlewares<RequestHandler>(EmployeeController)),
             ...(fetchMiddlewares<RequestHandler>(EmployeeController.prototype.getAllEmployeeBranch)),
 
@@ -277,13 +353,12 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/employee',
+        app.post('/company/:companyId/branch/:branchId/department/:departmentId/employee',
             ...(fetchMiddlewares<RequestHandler>(EmployeeController)),
             ...(fetchMiddlewares<RequestHandler>(EmployeeController.prototype.saveEmployee)),
 
             async function EmployeeController_saveEmployee(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
-                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
                     request: {"in":"body","name":"request","required":true,"ref":"ReqEmployee"},
             };
 
@@ -308,7 +383,7 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/employee/login',
+        app.post('/company/:companyId/branch/:branchId/department/:departmentId/employee/login',
             ...(fetchMiddlewares<RequestHandler>(EmployeeController)),
             ...(fetchMiddlewares<RequestHandler>(EmployeeController.prototype.userLogin)),
 
@@ -390,6 +465,38 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'getOneDepartment',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/company/:companyId/branch/:branchId/department',
+            ...(fetchMiddlewares<RequestHandler>(DepartmentController)),
+            ...(fetchMiddlewares<RequestHandler>(DepartmentController.prototype.saveDepartment)),
+
+            async function DepartmentController_saveDepartment(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    companyId: {"in":"path","name":"companyId","required":true,"dataType":"double"},
+                    branchId: {"in":"path","name":"branchId","required":true,"dataType":"double"},
+                    request: {"in":"body","name":"request","required":true,"ref":"ReqDepartment"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new DepartmentController();
+
+              await templateService.apiHandler({
+                methodName: 'saveDepartment',
                 controller,
                 response,
                 next,
@@ -601,6 +708,37 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'deleteBranch',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/company/:companyId/branch',
+            ...(fetchMiddlewares<RequestHandler>(BranchController)),
+            ...(fetchMiddlewares<RequestHandler>(BranchController.prototype.saveBranch)),
+
+            async function BranchController_saveBranch(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    companyId: {"in":"path","name":"companyId","required":true,"dataType":"double"},
+                    request: {"in":"body","name":"request","required":true,"ref":"ReqBranch"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new BranchController();
+
+              await templateService.apiHandler({
+                methodName: 'saveBranch',
                 controller,
                 response,
                 next,

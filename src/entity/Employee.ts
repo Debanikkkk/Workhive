@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Collection, Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Role } from "./Role";
 import { Department } from "./Department";
 import { Branch } from "./Branch";
@@ -24,7 +24,7 @@ export class Employee {
     })
     lastName?: string
 
-    @PrimaryColumn({
+    @Column({
         length: 64,
         unique: true
     })
@@ -38,31 +38,31 @@ export class Employee {
     status?: boolean
 
     @ManyToOne(() => (Role), (Role) => { Role.employee }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
-    @JoinColumn({ name: 'roleId' })
+    @JoinColumn({ name: 'role_id' })
     role?: Role
 
     @ManyToOne(() => (Department), (Department) => { Department.employees }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
-    @JoinColumn({ name: 'departmentId' })
+    @JoinColumn({ name: 'department_id' })
     department?: Department
 
     @ManyToOne(() => (Branch), (Branch) => { Branch.employees }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
-    @JoinColumn({ name: 'branchId' })
+    @JoinColumn({ name: 'branch_id' })
     branch?: Branch
 
     @ManyToOne(() => (Company), (Company) => { Company.employees }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
-    @JoinColumn({ name: 'companyId' })
+    @JoinColumn({ name: 'company_id' })
     company?: Company
 
     // @ManyToMany(() => Buddies, (Buddies) => { Buddies.employees }, { cascade: true })
     // buddies?: Buddies[]
 
-    // @ManyToMany(() => Buddies, buddies => buddies.employees)
-    // @JoinTable({
-    //     name: 'employee_n_buddies',
-    //     joinColumn: { name: 'employee_id' },
-    //     inverseJoinColumn: { name: 'buddies_id' }
-    // })
-    // buddies?: Buddies[];
+    @ManyToMany(() => (Buddies), (buddies) => { buddies.employees })
+    @JoinTable({
+        name: 'employee_n_buddies',
+        joinColumn: { name: 'employee_id' },
+        inverseJoinColumn: { name: 'buddies_id' }
+    })
+    buddies?: Buddies[];
 
     @OneToMany(() => (LeaveRequest), (LeaveRequest) => { LeaveRequest.employee }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
     leaverequests?: LeaveRequest[]

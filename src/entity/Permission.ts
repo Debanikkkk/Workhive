@@ -3,23 +3,23 @@ import { Role } from "./Role";
 // import { SubOEM } from "./SubOEM";
 
 @Entity()
-export class Permission{
+export class Permission {
     @PrimaryGeneratedColumn()
     id?: number
 
     @Column({
         length: 64,
     })
-    permissionName?: string
+    permission_name?: string
 
     @Column({
         length: 64,
     })
-    permissionDescription?: string
+    permission_description?: string
 
- 
-@ManyToMany(()=>Role, (Role)=>{Role.permissions}, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false} )
-roles?: Role[]
+
+    @ManyToMany(() => Role, (Role) => { Role.permissions }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
+    roles?: Role[]
     // @ManyToOne((type) => SubOEM, (suboem) => {suboem.regions}, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false})
     // @JoinColumn({ name: "suboem_id" })
     // suboem: SubOEM

@@ -13,14 +13,17 @@ import { ResEmployee } from "src/models/res/ResEmployee";
 import { Body, Controller, Delete, Get, Path, Post, Request, Route, Tags } from "tsoa";
 import { envs } from "utils/envVars";
 import * as jwt from 'jsonwebtoken';
-// @Route('company/{companyId}/branch/{branchId}/department/{departmentId}/employee')
-@Route('/employee')
+import { Role } from "entity/Role";
+@Route('company/{companyId}/branch/{branchId}/department/{departmentId}/employee')
+// @Route('/employee')
 @Tags('Employee')
 export class EmployeeController extends Controller {
     private employeerepository = AppDataSource.getRepository(Employee)
     private companyrepository = AppDataSource.getRepository(Company)
     private branchrepository = AppDataSource.getRepository(Branch)
     private departmentrepository = AppDataSource.getRepository(Department)
+    private rolerepository = AppDataSource.getRepository(Role)
+
 
 
     @Get()
@@ -120,26 +123,51 @@ export class EmployeeController extends Controller {
 
 
     @Post()
-    public async saveEmployee(@Request() req: JWTRequest, @Body() request: ReqEmployee) {
+    public async saveEmployee(
+        // @Path() companyId: number, @Path() branchId: number, @Path() departmentId: number,
+        @Body() request: ReqEmployee) {
         const department = await this.departmentrepository.findOne({
             where: {
-                id: req.user.department,
+                id: request.department,
                 branch: {
-                    id: req.user.branch,
-                    company: {
-                        id: req.user.company
-                    }
+                    id: request.branch,
                 }
+            },
+            relations: {
+                branch: true
             }
+
         })
+
         if (!department) {
             return Promise.reject(new Error('DEPARTMENT NOT FOUND'))
         }
 
-        const { id, firstName, lastName, username, status, password } = request
+        const company = await this.companyrepository.findOne({
+            where: {
+                id: request.company
+            }
+        })
+        if (!company) {
+            return Promise.reject(new Error('COMPANY NOT FOUND'))
+        }
+        const rolee = await this.rolerepository.findOne({
+            where: {
+                id: request.role
+            },
+            relations: {
+                permissions: true
+            }
+        })
+        if (!rolee) {
+            return Promise.reject(new Error('ROLE NOT FOUND'))
 
+        }
+        const { firstName, lastName, username, status, password } = request
+        console.log(department)
+        console.log(department.branch)
+        console.log(department.branch?.company)
         const employeeToSave: Employee = {
-            id: id,
             firstName: firstName,
             lastName: lastName,
             username: username,
@@ -147,7 +175,8 @@ export class EmployeeController extends Controller {
             password: password,
             department: department,
             branch: department.branch,
-            company: department.branch?.company
+            company: company,
+            role: rolee
         }
 
         const employeeSaver = Object.assign(new Employee, employeeToSave)
@@ -166,9 +195,9 @@ export class EmployeeController extends Controller {
                 status: department.branch?.status
             },
             company: {
-                id: department.branch?.company?.id,
-                logo_url: department.branch?.company?.logo_url,
-                name: department.branch?.company?.name
+                id: company.id,
+                logo_url: company.logo_url,
+                name: company.name
 
             },
             department: {
@@ -176,6 +205,11 @@ export class EmployeeController extends Controller {
                 name: department.name,
                 status: department.status
             },
+            role: {
+                id: rolee.id,
+                roleDescription: rolee.role_description,
+                roleName: rolee.role_name,
+            }
         }
         return resEmployeee
     }
@@ -218,8 +252,8 @@ export class EmployeeController extends Controller {
 
         const permissions: ResPermission[] = perm_result!.map((item) => ({
             id: item.id,
-            perm_name: item.permissionName,
-            description: item.permissionDescription,
+            perm_name: item.permission_name,
+            description: item.permission_description,
         }));
 
         const loginUser: ResUserLogin = {
@@ -231,8 +265,8 @@ export class EmployeeController extends Controller {
             },
             role: {
                 id: user.role.id!,
-                role_name: user.role.roleName!,
-                role_description: user.role.roleDescription!,
+                role_name: user.role.role_name!,
+                role_description: user.role.role_description!,
             },
             branch: {},
             department: {},
@@ -247,7 +281,7 @@ export class EmployeeController extends Controller {
             department: user.department?.id!,
             role: {
                 permissions: perm_result!.map<string>((p) => {
-                    return p.permissionName!;
+                    return p.permission_name!;
                 }),
             },
         };

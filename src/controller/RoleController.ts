@@ -40,15 +40,15 @@ export class RoleController extends Controller {
             perm?.forEach((perm) => {
                 const permToresperm: ResPermission = {
                     id: perm.id,
-                    permission_name: perm.permissionName,
-                    permission_description: perm.permissionDescription,
+                    permission_name: perm.permission_name,
+                    permission_description: perm.permission_description,
                 };
                 permsArr.push(permToresperm);
             });
             roleArr.push({
                 id: role.id,
-                roleDescription: role.roleDescription,
-                roleName: role.roleName,
+                role_description: role.role_description,
+                role_name: role.role_name,
                 permissions: permsArr
             })
         }

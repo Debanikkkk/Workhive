@@ -1,5 +1,4 @@
 export interface ReqEmployee {
-    id?: number,
     firstName?: string,
     lastName?: string,
     status?: boolean,

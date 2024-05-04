@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Path, Route, Tags } from "tsoa";
+import { Body, Controller, Delete, Get, Path, Post, Route, Tags } from "tsoa";
 import { AppDataSource } from "../data-source";
 import { Branch } from "../entity/Branch";
 import { Department } from "../entity/Department";
@@ -105,7 +105,7 @@ export class BranchController extends Controller {
 
         return Promise.resolve({ result: 'BRANCH DELETED SUCCESSFULLY' })
     }
-
+    @Post()
     public async saveBranch(@Path() companyId: number, @Body() request: ReqBranch): Promise<ResBranch> {
         const company = await this.companyrepository.findOne({
             where: {

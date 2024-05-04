@@ -11,10 +11,19 @@ export class LeaveRequest {
     })
     reason?: string
 
-    @Column()
+    @Column({
+        type: 'date'
+    })
     from_date?: Date
-
-    @Column()
+    toJSON() {
+        return {
+            ...this,
+            from_date: this.from_date?.toISOString().split('T')[0] // Format the date as YYYY-MM-DD
+        };
+    }
+    @Column({
+        type: 'date'
+    })
     to_date?: Date
 
     @ManyToOne(() => (Employee), (Employee) => { Employee.leaverequests }, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })

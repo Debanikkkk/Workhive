@@ -7,6 +7,6 @@ export interface JWTTokenData {
   // subOem?: number;
   company: number,
   branch: number,
-  department?: number,
+  department: number,
   role: { permissions: string[] };
 }

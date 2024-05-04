@@ -1,5 +1,5 @@
 export interface ReqDepartment {
-    id?: number,
+    // id?: number,
     name?: string,
     status?: boolean,
     branch?: number,

@@ -27,6 +27,8 @@ export class Buddies {
     // })
     // employees?: Employee[];
 
+    @ManyToMany(() => Employee, employee => employee.buddies, { cascade: true })
+    employees?: Employee[];
 
     @ManyToMany(() => (BuddyTask), (BuddyTask) => { BuddyTask.buddies })
     @JoinTable({
