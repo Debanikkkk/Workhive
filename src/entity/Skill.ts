@@ -26,6 +26,9 @@ export class Skill {
     })
     projects?: Promise<Project[]>
 
-    @OneToMany(() => (Task), (Task) => { Task.skill }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
-    tasks?: Promise<Task[]>
+    // @OneToMany(() => (Task), (Task) => { Task.skill }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
+    // tasks?: Promise<Task[]>
+
+    @ManyToMany(() => (Employee), (Employee) => { Employee.skills })
+    employees?: Employee[]
 }

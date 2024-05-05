@@ -16,11 +16,26 @@ export class Task {
     @Column()
     status?: boolean
 
+    @Column({
+        length: 64,
+    })
+    lastName?: string
+
+    @Column({
+        type: 'date'
+    })
+    start_date?: Date
+
+    @Column({
+        type: 'date'
+    })
+    end_date?: Date
+
     @ManyToOne(() => (Project), (Project) => { Project.tasks }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
     @JoinColumn({ name: 'project_id' })
     project?: Promise<Project>
 
-    @ManyToOne(() => (Skill), (Skill) => { Skill.tasks }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
-    @JoinColumn({ name: 'skill_id' })
-    skill?: Promise<Skill>
+    // @ManyToOne(() => (Skill), (Skill) => { Skill.tasks }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
+    // @JoinColumn({ name: 'skill_id' })
+    // skill?: Promise<Skill>
 }

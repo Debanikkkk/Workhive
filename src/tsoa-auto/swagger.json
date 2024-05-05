@@ -883,6 +883,8 @@
 						}
 					}
 				},
+				"description": "gets all branches",
+				"summary": ": gets all branches",
 				"tags": [
 					"Branch"
 				],

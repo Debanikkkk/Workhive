@@ -7,6 +7,7 @@ import { Company } from "./Company";
 import { Skill } from "./Skill";
 import { Buddies } from "./Buddies";
 import { LeaveRequest } from "./LeaveRequest";
+import { Clockin } from "./Clockin";
 // import { SubOEM } from "./SubOEM";
 
 @Entity()
@@ -23,6 +24,14 @@ export class Employee {
         length: 64,
     })
     lastName?: string
+
+    @Column()
+    salary?: number
+
+    @Column({
+        type: 'date'
+    })
+    date_of_joining?: Date
 
     @Column({
         length: 64,
@@ -64,6 +73,17 @@ export class Employee {
     })
     buddies?: Buddies[];
 
+    @ManyToMany(() => (Skill), (Skill) => { Skill.employees })
+    @JoinTable({
+        name: 'employee_n_skill',
+        joinColumn: { name: 'employee_id' },
+        inverseJoinColumn: { name: 'skill_id' }
+    })
+    skills?: Skill[];
+
     @OneToMany(() => (LeaveRequest), (LeaveRequest) => { LeaveRequest.employee }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
     leaverequests?: LeaveRequest[]
+
+    @OneToMany(() => (Clockin), (Clockin) => { Clockin.employee })
+    clockins?: Clockin[]
 }

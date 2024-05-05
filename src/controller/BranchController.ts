@@ -12,7 +12,10 @@ export class BranchController extends Controller {
     private branchrepository = AppDataSource.getRepository(Branch)
     private departmentrepository = AppDataSource.getRepository(Department)
     private companyrepository = AppDataSource.getRepository(Company)
-
+    /**
+     * gets all branches
+     * @summary: gets all branches
+     */
     @Get()
     public async getAllBranch(@Path() companyId: number): Promise<ResBranch[]> {
         const branches = await this.branchrepository.find({
