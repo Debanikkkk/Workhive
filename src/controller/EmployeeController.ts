@@ -10,7 +10,7 @@ import { ResPermission } from "src/models/res/ResPermission";
 import { ResUserLogin } from "src/models/res/ResUserLogin";
 import { JWTTokenData } from "src/models/res/TokenModel";
 import { ResEmployee } from "src/models/res/ResEmployee";
-import { Body, Controller, Delete, Get, Path, Post, Request, Route, Tags } from "tsoa";
+import { Body, Controller, Delete, Get, Path, Post, Request, Route, Security, Tags } from "tsoa";
 import { envs } from "utils/envVars";
 import * as jwt from 'jsonwebtoken';
 import { Role } from "entity/Role";
@@ -25,7 +25,7 @@ export class EmployeeController extends Controller {
     private rolerepository = AppDataSource.getRepository(Role)
 
 
-
+    // @Security({ 'Api-token': [] })
     @Get()
     public async getAllEmployeeBranch(@Request() req: JWTRequest): Promise<ResEmployee[]> {
 

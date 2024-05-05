@@ -7,6 +7,8 @@ import { RoleController } from './../controller/RoleController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { LeaveRequestController } from './../controller/LeaveRequestController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { HRLettersController } from './../controller/HRLettersController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { EmployeeController } from './../controller/EmployeeController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { DepartmentController } from './../controller/DepartmentController';
@@ -124,6 +126,28 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "status": {"dataType":"boolean"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ResHRLetter": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "letter_content": {"dataType":"string"},
+            "letter_subject": {"dataType":"string"},
+            "letter_time": {"dataType":"datetime"},
+            "employee": {"ref":"ResEmployee"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ReqHRLetter": {
+        "dataType": "refObject",
+        "properties": {
+            "letter_content": {"dataType":"string"},
+            "letter_subject": {"dataType":"string"},
+            "letter_time": {"dataType":"datetime"},
         },
         "additionalProperties": false,
     },
@@ -384,6 +408,67 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'updateLeaveRequest',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/hrletters',
+            ...(fetchMiddlewares<RequestHandler>(HRLettersController)),
+            ...(fetchMiddlewares<RequestHandler>(HRLettersController.prototype.getAllHrLetters)),
+
+            async function HRLettersController_getAllHrLetters(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new HRLettersController();
+
+              await templateService.apiHandler({
+                methodName: 'getAllHrLetters',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/hrletters',
+            ...(fetchMiddlewares<RequestHandler>(HRLettersController)),
+            ...(fetchMiddlewares<RequestHandler>(HRLettersController.prototype.saveHrLetters)),
+
+            async function HRLettersController_saveHrLetters(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+                    request: {"in":"body","name":"request","required":true,"ref":"ReqHRLetter"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new HRLettersController();
+
+              await templateService.apiHandler({
+                methodName: 'saveHrLetters',
                 controller,
                 response,
                 next,

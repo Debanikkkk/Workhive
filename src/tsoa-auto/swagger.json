@@ -206,6 +206,45 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"ResHRLetter": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"letter_content": {
+						"type": "string"
+					},
+					"letter_subject": {
+						"type": "string"
+					},
+					"letter_time": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"employee": {
+						"$ref": "#/components/schemas/ResEmployee"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ReqHRLetter": {
+				"properties": {
+					"letter_content": {
+						"type": "string"
+					},
+					"letter_subject": {
+						"type": "string"
+					},
+					"letter_time": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
 			"ReqEmployee": {
 				"properties": {
 					"firstName": {
@@ -593,6 +632,61 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/ReqLeaveRequestN"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/hrletters": {
+			"get": {
+				"operationId": "GetAllHrLetters",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ResHRLetter"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"HR Letters"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "SaveHrLetters",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResHRLetter"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"HR Letters"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReqHRLetter"
 							}
 						}
 					}

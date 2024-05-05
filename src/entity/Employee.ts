@@ -8,6 +8,7 @@ import { Skill } from "./Skill";
 import { Buddies } from "./Buddies";
 import { LeaveRequest } from "./LeaveRequest";
 import { Clockin } from "./Clockin";
+import { HRLetters } from "./HRLetters";
 // import { SubOEM } from "./SubOEM";
 
 @Entity()
@@ -84,6 +85,9 @@ export class Employee {
 
     @OneToMany(() => (LeaveRequest), (LeaveRequest) => { LeaveRequest.employee }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
     leaverequests?: LeaveRequest[]
+
+    @OneToMany(() => (HRLetters), (HRLetters) => { HRLetters.employee }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
+    hrletters?: HRLetters[]
 
     @OneToMany(() => (Clockin), (Clockin) => { Clockin.employee })
     clockins?: Clockin[]
