@@ -123,6 +123,10 @@
 					"username": {
 						"type": "string"
 					},
+					"salary": {
+						"type": "number",
+						"format": "double"
+					},
 					"password": {
 						"type": "string"
 					},
@@ -156,6 +160,9 @@
 						"type": "string",
 						"format": "date-time"
 					},
+					"status": {
+						"type": "boolean"
+					},
 					"reason": {
 						"type": "string"
 					},
@@ -168,10 +175,6 @@
 			},
 			"ReqLeaveRequest": {
 				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
 					"from_date": {
 						"type": "string",
 						"format": "date-time"
@@ -180,12 +183,24 @@
 						"type": "string",
 						"format": "date-time"
 					},
+					"status": {
+						"type": "boolean",
+						"enum": [
+							false
+						],
+						"nullable": false
+					},
 					"reason": {
 						"type": "string"
-					},
-					"employee": {
-						"type": "number",
-						"format": "double"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ReqLeaveRequestN": {
+				"properties": {
+					"status": {
+						"type": "boolean"
 					}
 				},
 				"type": "object",
@@ -201,6 +216,14 @@
 					},
 					"status": {
 						"type": "boolean"
+					},
+					"salary": {
+						"type": "number",
+						"format": "double"
+					},
+					"date_of_joining": {
+						"type": "string",
+						"format": "date-time"
 					},
 					"username": {
 						"type": "string"
@@ -225,6 +248,9 @@
 						"format": "double"
 					}
 				},
+				"required": [
+					"date_of_joining"
+				],
 				"type": "object",
 				"additionalProperties": false
 			},
@@ -473,8 +499,31 @@
 			}
 		},
 		"/leaveRequest": {
+			"get": {
+				"operationId": "GetAllLeaveRequest",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ResLeaveRequest"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leave_Request"
+				],
+				"security": [],
+				"parameters": []
+			},
 			"post": {
-				"operationId": "LeaveRequest",
+				"operationId": "SaveLeaveRequest",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -487,6 +536,8 @@
 						}
 					}
 				},
+				"description": "saves leave requests",
+				"summary": "saves leave requests",
 				"tags": [
 					"Leave_Request"
 				],
@@ -498,6 +549,50 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/ReqLeaveRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/leaveRequest/{leaverequestId}": {
+			"put": {
+				"operationId": "UpdateLeaveRequest",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResLeaveRequest"
+								}
+							}
+						}
+					}
+				},
+				"description": "updates leave request",
+				"summary": "updates leave request",
+				"tags": [
+					"Leave_Request"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "leaverequestId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReqLeaveRequestN"
 							}
 						}
 					}

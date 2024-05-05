@@ -8,7 +8,8 @@ export interface ResEmployee {
     firstName?: string,
     lastName?: string,
     status?: boolean,
-    username?: string
+    username?: string,
+    salary?: number,
     password?: string,
     department?: ResDepartment,
     branch?: ResBranch,

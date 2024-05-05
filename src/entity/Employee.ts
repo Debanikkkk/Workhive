@@ -18,18 +18,19 @@ export class Employee {
     @Column({
         length: 64,
     })
-    firstName?: string
+    first_name?: string
 
     @Column({
         length: 64,
     })
-    lastName?: string
+    last_name?: string
 
     @Column()
     salary?: number
 
     @Column({
-        type: 'date'
+        type: 'date',
+        default: () => 'CURRENT_TIMESTAMP'
     })
     date_of_joining?: Date
 

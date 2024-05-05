@@ -86,6 +86,7 @@ const models: TsoaRoute.Models = {
             "lastName": {"dataType":"string"},
             "status": {"dataType":"boolean"},
             "username": {"dataType":"string"},
+            "salary": {"dataType":"double"},
             "password": {"dataType":"string"},
             "department": {"ref":"ResDepartment"},
             "branch": {"ref":"ResBranch"},
@@ -101,6 +102,7 @@ const models: TsoaRoute.Models = {
             "id": {"dataType":"double"},
             "from_date": {"dataType":"datetime"},
             "to_date": {"dataType":"datetime"},
+            "status": {"dataType":"boolean"},
             "reason": {"dataType":"string"},
             "employee": {"ref":"ResEmployee"},
         },
@@ -110,11 +112,18 @@ const models: TsoaRoute.Models = {
     "ReqLeaveRequest": {
         "dataType": "refObject",
         "properties": {
-            "id": {"dataType":"double"},
             "from_date": {"dataType":"datetime"},
             "to_date": {"dataType":"datetime"},
+            "status": {"dataType":"enum","enums":[false]},
             "reason": {"dataType":"string"},
-            "employee": {"dataType":"double"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ReqLeaveRequestN": {
+        "dataType": "refObject",
+        "properties": {
+            "status": {"dataType":"boolean"},
         },
         "additionalProperties": false,
     },
@@ -125,6 +134,8 @@ const models: TsoaRoute.Models = {
             "firstName": {"dataType":"string"},
             "lastName": {"dataType":"string"},
             "status": {"dataType":"boolean"},
+            "salary": {"dataType":"double"},
+            "date_of_joining": {"dataType":"datetime","required":true},
             "username": {"dataType":"string"},
             "password": {"dataType":"string"},
             "department": {"dataType":"double"},
@@ -292,11 +303,41 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/leaveRequest',
+            ...(fetchMiddlewares<RequestHandler>(LeaveRequestController)),
+            ...(fetchMiddlewares<RequestHandler>(LeaveRequestController.prototype.getAllLeaveRequest)),
+
+            async function LeaveRequestController_getAllLeaveRequest(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new LeaveRequestController();
+
+              await templateService.apiHandler({
+                methodName: 'getAllLeaveRequest',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/leaveRequest',
             ...(fetchMiddlewares<RequestHandler>(LeaveRequestController)),
-            ...(fetchMiddlewares<RequestHandler>(LeaveRequestController.prototype.LeaveRequest)),
+            ...(fetchMiddlewares<RequestHandler>(LeaveRequestController.prototype.saveLeaveRequest)),
 
-            async function LeaveRequestController_LeaveRequest(request: ExRequest, response: ExResponse, next: any) {
+            async function LeaveRequestController_saveLeaveRequest(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"body","name":"request","required":true,"ref":"ReqLeaveRequest"},
                     req: {"in":"request","name":"req","required":true,"dataType":"object"},
@@ -311,7 +352,38 @@ export function RegisterRoutes(app: Router) {
                 const controller = new LeaveRequestController();
 
               await templateService.apiHandler({
-                methodName: 'LeaveRequest',
+                methodName: 'saveLeaveRequest',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.put('/leaveRequest/:leaverequestId',
+            ...(fetchMiddlewares<RequestHandler>(LeaveRequestController)),
+            ...(fetchMiddlewares<RequestHandler>(LeaveRequestController.prototype.updateLeaveRequest)),
+
+            async function LeaveRequestController_updateLeaveRequest(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"body","name":"request","required":true,"ref":"ReqLeaveRequestN"},
+                    leaverequestId: {"in":"path","name":"leaverequestId","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new LeaveRequestController();
+
+              await templateService.apiHandler({
+                methodName: 'updateLeaveRequest',
                 controller,
                 response,
                 next,

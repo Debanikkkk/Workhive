@@ -15,16 +15,17 @@ export class LeaveRequest {
         type: 'date'
     })
     from_date?: Date
-    toJSON() {
-        return {
-            ...this,
-            from_date: this.from_date?.toISOString().split('T')[0] // Format the date as YYYY-MM-DD
-        };
-    }
+
+
     @Column({
         type: 'date'
     })
     to_date?: Date
+
+    @Column({
+        // default: false
+    })
+    status?: boolean
 
     @ManyToOne(() => (Employee), (Employee) => { Employee.leaverequests }, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
     employee?: Employee

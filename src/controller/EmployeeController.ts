@@ -59,8 +59,8 @@ export class EmployeeController extends Controller {
         for (const employee of employees) {
             employeeArr.push({
                 id: employee.id,
-                firstName: employee.firstName,
-                lastName: employee.lastName,
+                firstName: employee.first_name,
+                lastName: employee.last_name,
                 status: employee.status,
                 username: employee.username,
                 branch: employee.branch,
@@ -163,16 +163,17 @@ export class EmployeeController extends Controller {
             return Promise.reject(new Error('ROLE NOT FOUND'))
 
         }
-        const { firstName, lastName, username, status, password } = request
+        const { firstName, lastName, username, status, password, salary } = request
         console.log(department)
         console.log(department.branch)
         console.log(department.branch?.company)
         const employeeToSave: Employee = {
-            firstName: firstName,
-            lastName: lastName,
+            first_name: firstName,
+            last_name: lastName,
             username: username,
             status: status,
             password: password,
+            salary: salary,
             department: department,
             branch: department.branch,
             company: company,
@@ -184,8 +185,9 @@ export class EmployeeController extends Controller {
 
         const resEmployeee: ResEmployee = {
             id: savedEmployee.id,
-            firstName: savedEmployee.firstName,
-            lastName: savedEmployee.lastName,
+            firstName: savedEmployee.first_name,
+            lastName: savedEmployee.last_name,
+            salary: savedEmployee.salary,
             status: savedEmployee.status,
             username: savedEmployee.username,
             password: savedEmployee.password,
@@ -257,7 +259,7 @@ export class EmployeeController extends Controller {
         }));
 
         const loginUser: ResUserLogin = {
-            name: (user.firstName ? user.firstName : '') + ' ' + (user.lastName ? user.lastName : ''),
+            name: (user.first_name ? user.first_name : '') + ' ' + (user.last_name ? user.last_name : ''),
             company: {
                 id: user.company.id!,
                 logo_url: user.company.logo_url!,
