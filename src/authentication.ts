@@ -13,6 +13,7 @@ export function expressAuthentication(request: express.Request, securityName: st
             if (!token) {
                 reject(new ResponseError(403, 'Authorization required'));
             }
+            // res.set('Access-Control-Allow-Origin', 'http://localhost:3001');
             jwt.verify(token, envs.JWT_SECRET_KEY, function (err: any, decoded: any) {
                 if (err) {
                     reject(err);
