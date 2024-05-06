@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class RolePermission1714826930410 implements MigrationInterface {
+export class RolePermission1714992211482 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
@@ -16,7 +16,6 @@ export class RolePermission1714826930410 implements MigrationInterface {
         INSERT INTO permission(permission_name, permission_description) VALUES('manageEmployees', 'Permission to Create, Update and Delete employees');
 
         INSERT INTO role_permission(role_id, permission_id) VALUES((SELECT id FROM role WHERE role_name='employee'), (SELECT id FROM permission WHERE permission_name='viewTasks'));
-
         `)
     }
 
@@ -25,7 +24,6 @@ export class RolePermission1714826930410 implements MigrationInterface {
         DELETE FROM role_permission;
         DELETE FROM role;
         DELETE FROM permission;
-
         `)
     }
 
