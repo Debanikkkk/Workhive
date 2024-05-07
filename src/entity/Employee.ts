@@ -9,6 +9,7 @@ import { Buddies } from "./Buddies";
 import { LeaveRequest } from "./LeaveRequest";
 import { Clockin } from "./Clockin";
 import { HRLetters } from "./HRLetters";
+import { Project } from "./Project";
 // import { SubOEM } from "./SubOEM";
 
 @Entity()
@@ -91,4 +92,9 @@ export class Employee {
 
     @OneToMany(() => (Clockin), (Clockin) => { Clockin.employee })
     clockins?: Clockin[]
+
+    @ManyToOne(() => (Project), (Project) => { Project.employees }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
+    @JoinColumn({ name: 'project_id' })
+    project?: Project
+    
 }

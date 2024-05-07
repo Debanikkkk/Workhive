@@ -146,6 +146,83 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"ResSkill": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResProject": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"department": {
+						"$ref": "#/components/schemas/ResDepartment"
+					},
+					"employees": {
+						"items": {
+							"$ref": "#/components/schemas/ResEmployee"
+						},
+						"type": "array"
+					},
+					"end_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"name": {
+						"type": "string"
+					},
+					"skills": {
+						"items": {
+							"$ref": "#/components/schemas/ResSkill"
+						},
+						"type": "array"
+					},
+					"start_date": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ReqProject": {
+				"properties": {
+					"department": {
+						"type": "number",
+						"format": "double"
+					},
+					"end_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"name": {
+						"type": "string"
+					},
+					"skills": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array"
+					},
+					"start_date": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
 			"ResLeaveRequest": {
 				"properties": {
 					"id": {
@@ -535,6 +612,61 @@
 				],
 				"security": [],
 				"parameters": []
+			}
+		},
+		"/project": {
+			"get": {
+				"operationId": "GetAllProject",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ResProject"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Project"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "SaveProject",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResProject"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Project"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReqProject"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/leaveRequest": {

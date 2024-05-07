@@ -16,10 +16,10 @@ export class Task {
     @Column()
     status?: boolean
 
-    @Column({
-        length: 64,
-    })
-    lastName?: string
+    // @Column({
+    //     length: 64,
+    // })
+    // lastName?: string
 
     @Column({
         type: 'date'
@@ -33,7 +33,7 @@ export class Task {
 
     @ManyToOne(() => (Project), (Project) => { Project.tasks }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
     @JoinColumn({ name: 'project_id' })
-    project?: Promise<Project>
+    project?: Project
 
     // @ManyToOne(() => (Skill), (Skill) => { Skill.tasks }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
     // @JoinColumn({ name: 'skill_id' })

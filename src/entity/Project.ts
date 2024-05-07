@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany
 import { Skill } from "./Skill"
 import { Task } from "./Task"
 import { Department } from "./Department"
+import { Employee } from "./Employee"
 
 @Entity()
 export class Project {
@@ -29,12 +30,15 @@ export class Project {
     //     joinColumn:{name: 'project_id'},
     //     inverseJoinColumn:{name: 'skill_id'}
     // })
-    skills?: Promise<Skill[]>
+    skills?:Skill[]
 
     @OneToMany(() => (Task), (Task) => { Task.project }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
-    tasks?: Promise<Task[]>
+    tasks?:Task[]
+
+    @OneToMany(() => (Employee), (Employee) => { Employee.project }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
+    employees?: Promise<Employee[]>
 
     @ManyToOne(() => (Department), (Department) => { Department.projects }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
     @JoinColumn({ name: 'department_id' })
-    department?: Promise<Department>
+    department?: Department
 }

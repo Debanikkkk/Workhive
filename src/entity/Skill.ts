@@ -24,7 +24,7 @@ export class Skill {
         joinColumn: { name: 'skill_id' },
         inverseJoinColumn: { name: 'project_id' }
     })
-    projects?: Promise<Project[]>
+    projects?: Project[]
 
     // @OneToMany(() => (Task), (Task) => { Task.skill }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
     // tasks?: Promise<Task[]>
