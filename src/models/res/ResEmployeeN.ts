@@ -4,7 +4,7 @@ import { ResDepartment } from "./ResDepartment";
 import { ResRole } from "./ResRole";
 import { ResSkill } from "./ResSkill";
 
-export interface ResEmployee {
+export interface ResEmployeeN {
     id?: number,
     firstName?: string,
     lastName?: string,
@@ -16,5 +16,5 @@ export interface ResEmployee {
     branch?: ResBranch,
     company?: ResCompany,
     role?: ResRole,
-    skills?: ResSkill[]
+    // skills?: ResSkill[]
 }

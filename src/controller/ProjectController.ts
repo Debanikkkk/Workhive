@@ -24,7 +24,7 @@ export class ProjectController extends Controller{
         const projects=await this.projectrepository.find({
             where:{
                 department:{
-                    id: req.user.department
+                    id: req.user?.department
                 }
             },
             relations:{
@@ -88,89 +88,146 @@ export class ProjectController extends Controller{
     public async saveProject(@Request() req: JWTRequest, @Body() request: ReqProject){
         const department=await this.departmentrepository.findOne({
             where:{
-                id: req.user.department
+                id: req.user?.department
             },
-            relations:{
-                branch: true,
-                employees: true
-
-            }
         })
 
         if(!department){
             return Promise.reject(new Error('DEPARTMENT NOT FOUND'))
         }
 
-        const {end_date, name,start_date,skills}=request
-        const skillArr: Skill[]=[]
-        if(skills){
+        const {end_date, name,start_date,
+            // skills,
+            //  employees
+            }=request
+        // const skillArr: Skill[]=[]
+        // // const skillp=skills
+        // if(!skills){
+        //     return Promise.reject(new Error('SKILLS NOT FOUND'))
+        // }
+        // if(skills){
             
-            const dbskill=await this.skillrepository.find({
-                where:{
-                    id: In(skills)
-                } 
-            })
+        //     const dbskill=await this.skillrepository.find({
+        //         where:{
+                    
+        //             id: In(skills)
+        //         } 
+        //     })
 
-            if(!dbskill){
-                return Promise.reject(new Error('SKILLS NOT FOUND IN DB'))
-            }
+        //     if(!dbskill){
+        //         return Promise.reject(new Error('SKILLS NOT FOUND IN DB'))
+        //     }
 
-            skillArr.push(...dbskill)
-        }
+        //     skillArr.push(...dbskill)
+        // }
 
-        const employeess=await this.employeerepository.find({
-            where:{
-                skills:{
-                    id: In(skillArr)
-                }
-            }
-        })
+    //     const employeeArr: Employee[]=[]
+    //   if(employees){
+    //     const db_employees=await this.employeerepository.find({
+    //         where:{
+    //             id: In(employees)
+    //         }
+    //     })
+
+    //     if(!db_employees){
+    //         return Promise.reject(new Error('EMPLOYEES IN DATABASE NOT FOUND'))
+    //     }
+
+    //     employeeArr.push(...db_employees)
+    //   }
+        // const employeeArr: Employee[]=[]
+        // const employeess=await this.employeerepository.find({
+        //     relations:['skills'],
+        //     where:{
+        //         skills:{
+        //             id:In(skills)
+        //         }
+        //     }
+        // })
+
        
+    
         const projectSave: Project={
-            department,
-            employees: Promise.resolve(employeess),
+            department: department,
+            // employees: Promise.resolve(employeeArr),
             end_date: end_date,
             name: name,
-            skills: skillArr,
+            // skills: Promise.resolve(skillArr),
             start_date: start_date,
         }
 
         const projectSaver=Object.assign(new Project(), projectSave)
-        const savedProject=await this.projectrepository.save(projectSave)
+        const savedProject=await this.projectrepository.save(projectSaver)
 
         const resProject: ResProject={
             department: savedProject.department,
-            employees: [],
+            // employees: [],
             end_date: savedProject.end_date,
             id: savedProject.id,
             name: savedProject.name,
-            skills: [],
+            // skills: [],
             start_date: savedProject.start_date
         }
-        if (!savedProject.employees) {
-            return resProject;
-          }
+        // if (!savedProject.skills) {
+        //     return resProject;
+        //   }
       
-          savedProject.employees?.then<ResProject>((employees) => {
-            resProject.employees = employees.map((d) => {
-              return {
-                id: d.id,
-                branch: d.branch,
-                company: d.company,
-                department: d.department,
-                firstName: d.first_name,
-                lastName: d.last_name,
-                password: d.password,
-                role: d.role,
-                salary: d.salary,
-                status: d.status          
-              };
-            });
-            this.setStatus(201);
-            return resProject;
-          });
+        //   savedProject.skills?.then<ResSkill>((skills) => {
+        //     resProject.skills = skills.map((d) => {
+        //       return {
+        //         id: d.id,
+        //         name: d.name      
+        //       };
+        //     });
+        //     this.setStatus(201);
+        //     return resProject;
+        //   });
+      
+        // if (!savedProject.employees) {
+        //     return resProject;
+        //   }
+      
+        //   savedProject.employees?.then<ResProject>((employees) => {
+        //     resProject.employees = employees.map((d) => {
+        //       return {
+        //         id: d.id,
+        //         branch: d.branch,
+        //         company: d.company,
+        //         department: d.department,
+        //         firstName: d.first_name,
+        //         lastName: d.last_name,
+        //         password: d.password,
+        //         role: d.role,
+        //         salary: d.salary,
+        //         status: d.status          
+        //       };
+        //     });
+        //     this.setStatus(201);
+        //     return resProject;
+        //   });
       
         return resProject
 
+
     } 
 }
+        // if (savedProject.employees) {
+        //     const employees = await savedProject.employees;
+        //     resProject.employees = employees.map((d) => {
+        //         return {
+        //             id: d.id,
+        //             branch: d.branch,
+        //             company: d.company,
+        //             department: d.department,
+        //             firstName: d.first_name,
+        //             lastName: d.last_name,
+        //             password: d.password,
+        //             role: d.role,
+        //             salary: d.salary,
+        //             status: d.status          
+        //         };
+        //     });
+        // }
+        
+        // this.setStatus(201);
+        // return resProject;

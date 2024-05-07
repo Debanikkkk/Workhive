@@ -19,7 +19,7 @@ export class CompanyController extends Controller {
     if (!companies) {
       return Promise.reject("COMPANIES NOT FOUND");
     }
-    const companyArr: Company[] = [];
+    const companyArr: ResCompany[] = [];
     for (const company of companies) {
       companyArr.push({
         id: company.id,

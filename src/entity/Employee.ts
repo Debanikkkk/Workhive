@@ -82,7 +82,7 @@ export class Employee {
         joinColumn: { name: 'employee_id' },
         inverseJoinColumn: { name: 'skill_id' }
     })
-    skills?: Skill[];
+    skills?: Promise<Skill[]>;
 
     @OneToMany(() => (LeaveRequest), (LeaveRequest) => { LeaveRequest.employee }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
     leaverequests?: LeaveRequest[]
@@ -93,7 +93,7 @@ export class Employee {
     @OneToMany(() => (Clockin), (Clockin) => { Clockin.employee })
     clockins?: Clockin[]
 
-    @ManyToOne(() => (Project), (Project) => { Project.employees }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
+    @ManyToOne(() => (Project), (Project) => { Project.employees }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: true })
     @JoinColumn({ name: 'project_id' })
     project?: Project
     

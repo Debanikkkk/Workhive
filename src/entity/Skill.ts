@@ -18,7 +18,7 @@ export class Skill {
 
     // employees: Promise<Employee[]>
 
-    @ManyToMany(() => (Project), (Project) => { Project.skills }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
+    @ManyToMany(() => (Project), (Project) => { Project.skills }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: true })
     @JoinTable({
         name: 'project_skill',
         joinColumn: { name: 'skill_id' },

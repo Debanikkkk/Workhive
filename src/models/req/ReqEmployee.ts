@@ -10,4 +10,5 @@ export interface ReqEmployee {
     branch?: number,
     company?: number,
     role?: number,
+    skills?: number[]
 }

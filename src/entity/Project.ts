@@ -24,18 +24,18 @@ export class Project {
     })
     end_date?: Date
 
-    @ManyToMany(() => (Skill), (Skill) => { Skill.projects }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
+    @ManyToMany(() => (Skill), (Skill) => { Skill.projects }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: true })
     // @JoinTable({
     //     name: 'project_skill',
     //     joinColumn:{name: 'project_id'},
     //     inverseJoinColumn:{name: 'skill_id'}
     // })
-    skills?:Skill[]
+    skills?:Promise<Skill[]>
 
-    @OneToMany(() => (Task), (Task) => { Task.project }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
+    @OneToMany(() => (Task), (Task) => { Task.project }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: true })
     tasks?:Task[]
 
-    @OneToMany(() => (Employee), (Employee) => { Employee.project }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
+    @OneToMany(() => (Employee), (Employee) => { Employee.project }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: true })
     employees?: Promise<Employee[]>
 
     @ManyToOne(() => (Department), (Department) => { Department.projects }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })

@@ -1,4 +1,5 @@
-import { ResEmployee } from "./ResEmployee";
+
+import { ResEmployeeN } from "./ResEmployeeN";
 
 export interface ResLeaveRequest {
     id?: number,
@@ -6,5 +7,5 @@ export interface ResLeaveRequest {
     to_date?: Date,
     status?: boolean,
     reason?: string,
-    employee?: ResEmployee,
+    employee?: ResEmployeeN,
 }

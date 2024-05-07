@@ -23,14 +23,14 @@ export class HRLettersController extends Controller {
             },
             relations: {
                 employee: true
-
+                
             }
         })
         if (!hrletters) {
             return Promise.reject(new Error('HR LETTERS NOT FOUND'))
         }
 
-        const hrlettersArr: HRLetters[] = []
+        const hrlettersArr: ResHRLetter[] = []
 
         for (const hrletter of hrletters) {
             hrlettersArr.push({

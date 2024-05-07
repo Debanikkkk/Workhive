@@ -32,7 +32,7 @@ export class LeaveRequestController extends Controller {
             return Promise.reject(new Error('LEAVE REQUEST NOT FOUND'))
         }
 
-        const leaverequestArr: LeaveRequest[] = []
+        const leaverequestArr: ResLeaveRequest[] = []
 
         for (const leaverequest of leaverequests) {
             leaverequestArr.push({

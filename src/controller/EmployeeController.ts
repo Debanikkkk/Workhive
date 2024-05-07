@@ -14,6 +14,8 @@ import { Body, Controller, Delete, Get, Path, Post, Request, Route, Security, Ta
 import { envs } from "utils/envVars";
 import * as jwt from 'jsonwebtoken';
 import { Role } from "entity/Role";
+import { Skill } from "entity/Skill";
+import { In } from "typeorm";
 @Route('company/{companyId}/branch/{branchId}/department/{departmentId}/employee')
 // @Route('/employee')
 @Tags('Employee')
@@ -23,7 +25,7 @@ export class EmployeeController extends Controller {
     private branchrepository = AppDataSource.getRepository(Branch)
     private departmentrepository = AppDataSource.getRepository(Department)
     private rolerepository = AppDataSource.getRepository(Role)
-
+    private skillrepository=AppDataSource.getRepository(Skill)
 
     // @Security({ 'Api-token': [] })
     @Get()
@@ -163,7 +165,23 @@ export class EmployeeController extends Controller {
             return Promise.reject(new Error('ROLE NOT FOUND'))
 
         }
-        const { firstName, lastName, username, status, password, salary } = request
+
+        
+        const { firstName, lastName, username, status, password, salary, skills } = request
+        const skillArr: Skill[]=[]
+        if(skills){
+            const dbskills=await this.skillrepository.find({
+                where:{
+                    id: In(skills)
+                }
+            })
+
+            if(!dbskills){
+                return Promise.reject(new Error('SKILLS IN DB NOT FOUND'))
+            }
+
+            skillArr.push(...dbskills)
+        }
         console.log(department)
         console.log(department.branch)
         console.log(department.branch?.company)
@@ -177,7 +195,8 @@ export class EmployeeController extends Controller {
             department: department,
             branch: department.branch,
             company: company,
-            role: rolee
+            role: rolee,
+            skills: Promise.resolve(skillArr)
         }
 
         const employeeSaver = Object.assign(new Employee, employeeToSave)
@@ -211,7 +230,8 @@ export class EmployeeController extends Controller {
                 id: rolee.id,
                 roleDescription: rolee.role_description,
                 roleName: rolee.role_name,
-            }
+            },
+            skills:[]
         }
         return resEmployeee
     }

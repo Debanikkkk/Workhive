@@ -7,6 +7,28 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"ResSkill": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ReqSkill": {
+				"properties": {
+					"name": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
 			"ResRole": {
 				"properties": {
 					"id": {
@@ -141,19 +163,12 @@
 					},
 					"role": {
 						"$ref": "#/components/schemas/ResRole"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"ResSkill": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
 					},
-					"name": {
-						"type": "string"
+					"skills": {
+						"items": {
+							"$ref": "#/components/schemas/ResSkill"
+						},
+						"type": "array"
 					}
 				},
 				"type": "object",
@@ -197,10 +212,6 @@
 			},
 			"ReqProject": {
 				"properties": {
-					"department": {
-						"type": "number",
-						"format": "double"
-					},
 					"end_date": {
 						"type": "string",
 						"format": "date-time"
@@ -208,16 +219,50 @@
 					"name": {
 						"type": "string"
 					},
-					"skills": {
-						"items": {
-							"type": "number",
-							"format": "double"
-						},
-						"type": "array"
-					},
 					"start_date": {
 						"type": "string",
 						"format": "date-time"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResEmployeeN": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"username": {
+						"type": "string"
+					},
+					"salary": {
+						"type": "number",
+						"format": "double"
+					},
+					"password": {
+						"type": "string"
+					},
+					"department": {
+						"$ref": "#/components/schemas/ResDepartment"
+					},
+					"branch": {
+						"$ref": "#/components/schemas/ResBranch"
+					},
+					"company": {
+						"$ref": "#/components/schemas/ResCompany"
+					},
+					"role": {
+						"$ref": "#/components/schemas/ResRole"
 					}
 				},
 				"type": "object",
@@ -244,7 +289,7 @@
 						"type": "string"
 					},
 					"employee": {
-						"$ref": "#/components/schemas/ResEmployee"
+						"$ref": "#/components/schemas/ResEmployeeN"
 					}
 				},
 				"type": "object",
@@ -300,7 +345,7 @@
 						"format": "date-time"
 					},
 					"employee": {
-						"$ref": "#/components/schemas/ResEmployee"
+						"$ref": "#/components/schemas/ResEmployeeN"
 					}
 				},
 				"type": "object",
@@ -362,6 +407,13 @@
 					"role": {
 						"type": "number",
 						"format": "double"
+					},
+					"skills": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array"
 					}
 				},
 				"required": [
@@ -517,6 +569,493 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"Employee": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"first_name": {
+						"type": "string"
+					},
+					"last_name": {
+						"type": "string"
+					},
+					"salary": {
+						"type": "number",
+						"format": "double"
+					},
+					"date_of_joining": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"username": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"role": {
+						"$ref": "#/components/schemas/Role"
+					},
+					"department": {
+						"$ref": "#/components/schemas/Department"
+					},
+					"branch": {
+						"$ref": "#/components/schemas/Branch"
+					},
+					"company": {
+						"$ref": "#/components/schemas/Company"
+					},
+					"buddies": {
+						"items": {
+							"$ref": "#/components/schemas/Buddies"
+						},
+						"type": "array"
+					},
+					"skills": {
+						"items": {
+							"$ref": "#/components/schemas/Skill"
+						},
+						"type": "array"
+					},
+					"leaverequests": {
+						"items": {
+							"$ref": "#/components/schemas/LeaveRequest"
+						},
+						"type": "array"
+					},
+					"hrletters": {
+						"items": {
+							"$ref": "#/components/schemas/HRLetters"
+						},
+						"type": "array"
+					},
+					"clockins": {
+						"items": {
+							"$ref": "#/components/schemas/Clockin"
+						},
+						"type": "array"
+					},
+					"project": {
+						"$ref": "#/components/schemas/Project"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Role": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"role_name": {
+						"type": "string"
+					},
+					"role_description": {
+						"type": "string"
+					},
+					"employee": {
+						"items": {
+							"$ref": "#/components/schemas/Employee"
+						},
+						"type": "array"
+					},
+					"permissions": {
+						"items": {
+							"$ref": "#/components/schemas/Permission"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Permission": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"permission_name": {
+						"type": "string"
+					},
+					"permission_description": {
+						"type": "string"
+					},
+					"roles": {
+						"items": {
+							"$ref": "#/components/schemas/Role"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Department": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"employees": {
+						"items": {
+							"$ref": "#/components/schemas/Employee"
+						},
+						"type": "array"
+					},
+					"branch": {
+						"$ref": "#/components/schemas/Branch"
+					},
+					"projects": {
+						"items": {
+							"$ref": "#/components/schemas/Project"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Branch": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"employees": {
+						"items": {
+							"$ref": "#/components/schemas/Employee"
+						},
+						"type": "array"
+					},
+					"departments": {
+						"items": {
+							"$ref": "#/components/schemas/Department"
+						},
+						"type": "array"
+					},
+					"company": {
+						"$ref": "#/components/schemas/Company"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Company": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"logo_url": {
+						"type": "string"
+					},
+					"employees": {
+						"items": {
+							"$ref": "#/components/schemas/Employee"
+						},
+						"type": "array"
+					},
+					"branches": {
+						"items": {
+							"$ref": "#/components/schemas/Branch"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Project": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"start_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"end_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"skills": {
+						"items": {
+							"$ref": "#/components/schemas/Skill"
+						},
+						"type": "array"
+					},
+					"tasks": {
+						"items": {
+							"$ref": "#/components/schemas/Task"
+						},
+						"type": "array"
+					},
+					"employees": {
+						"items": {
+							"$ref": "#/components/schemas/Employee"
+						},
+						"type": "array"
+					},
+					"department": {
+						"$ref": "#/components/schemas/Department"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Skill": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"projects": {
+						"items": {
+							"$ref": "#/components/schemas/Project"
+						},
+						"type": "array"
+					},
+					"employees": {
+						"items": {
+							"$ref": "#/components/schemas/Employee"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Task": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"start_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"end_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"project": {
+						"$ref": "#/components/schemas/Project"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Buddies": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"buddy_group_name": {
+						"type": "string"
+					},
+					"employees": {
+						"items": {
+							"$ref": "#/components/schemas/Employee"
+						},
+						"type": "array"
+					},
+					"buddy_tasks": {
+						"items": {
+							"$ref": "#/components/schemas/BuddyTask"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"BuddyTask": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"buddyTask": {
+						"type": "string"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"startDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"endDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"buddies": {
+						"items": {
+							"$ref": "#/components/schemas/Buddies"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LeaveRequest": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"reason": {
+						"type": "string"
+					},
+					"from_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"to_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"employee": {
+						"$ref": "#/components/schemas/Employee"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"HRLetters": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"letter_subject": {
+						"type": "string"
+					},
+					"letter_content": {
+						"type": "string"
+					},
+					"letter_time": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"employee": {
+						"$ref": "#/components/schemas/Employee"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Clockin": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"clock_in": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"clock_out": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"employee": {
+						"$ref": "#/components/schemas/Employee"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResClockin": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"clock_in": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"clock_out": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"employee": {
+						"$ref": "#/components/schemas/ResEmployee"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ReqClockIn": {
+				"properties": {
+					"clock_in": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"clock_out": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"employee": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ReqClockInU": {
+				"properties": {
+					"clock_out": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
 			"ReqBranch": {
 				"properties": {
 					"name": {
@@ -549,6 +1088,61 @@
 		"contact": {}
 	},
 	"paths": {
+		"/skill": {
+			"get": {
+				"operationId": "GetSkills",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ResSkill"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Skills"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "SaveSkill",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResSkill"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Skills"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReqSkill"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/role/{roleId}": {
 			"delete": {
 				"operationId": "DeleteRole",
@@ -1184,6 +1778,103 @@
 						}
 					}
 				]
+			}
+		},
+		"/clockin": {
+			"get": {
+				"operationId": "GetClockIns",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Clockin"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"ClockIn"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "SaveClockIn",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResClockin"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"ClockIn"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReqClockIn"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/clockin/{clockinId}": {
+			"put": {
+				"operationId": "UpdateClock",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResClockin"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"ClockIn"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "clockinId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReqClockInU"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/company/{companyId}/branch": {
