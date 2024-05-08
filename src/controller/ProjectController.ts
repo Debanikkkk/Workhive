@@ -97,29 +97,29 @@ export class ProjectController extends Controller{
         }
 
         const {end_date, name,start_date,
-            // skills,
+            skills,
             //  employees
             }=request
-        // const skillArr: Skill[]=[]
-        // // const skillp=skills
-        // if(!skills){
-        //     return Promise.reject(new Error('SKILLS NOT FOUND'))
-        // }
-        // if(skills){
+        const skillArr: Skill[]=[]
+        // const skillp=skills
+        if(!skills){
+            return Promise.reject(new Error('SKILLS NOT FOUND'))
+        }
+        if(skills){
             
-        //     const dbskill=await this.skillrepository.find({
-        //         where:{
+            const dbskill=await this.skillrepository.find({
+                where:{
                     
-        //             id: In(skills)
-        //         } 
-        //     })
+                    id: In(skills)
+                } 
+            })
 
-        //     if(!dbskill){
-        //         return Promise.reject(new Error('SKILLS NOT FOUND IN DB'))
-        //     }
+            if(!dbskill){
+                return Promise.reject(new Error('SKILLS NOT FOUND IN DB'))
+            }
 
-        //     skillArr.push(...dbskill)
-        // }
+            skillArr.push(...dbskill)
+        }
 
     //     const employeeArr: Employee[]=[]
     //   if(employees){
@@ -135,6 +135,21 @@ export class ProjectController extends Controller{
 
     //     employeeArr.push(...db_employees)
     //   }
+    const skillIds = skillArr.map(skill => skill.id);
+
+        const employeess=await this.employeerepository.find({
+            where:{
+                
+                skills:{
+                    id: In(skillIds)
+                }
+            },
+            relations:{
+                department: true,
+                branch:true,
+                company: true,
+            }
+        })
         // const employeeArr: Employee[]=[]
         // const employeess=await this.employeerepository.find({
         //     relations:['skills'],
@@ -149,10 +164,10 @@ export class ProjectController extends Controller{
     
         const projectSave: Project={
             department: department,
-            // employees: Promise.resolve(employeeArr),
+            employees: Promise.resolve(employeess),
             end_date: end_date,
             name: name,
-            // skills: Promise.resolve(skillArr),
+            skills: Promise.resolve(skillArr),
             start_date: start_date,
         }
 
@@ -161,50 +176,50 @@ export class ProjectController extends Controller{
 
         const resProject: ResProject={
             department: savedProject.department,
-            // employees: [],
+            employees: [],
             end_date: savedProject.end_date,
             id: savedProject.id,
             name: savedProject.name,
-            // skills: [],
+            skills: [],
             start_date: savedProject.start_date
         }
-        // if (!savedProject.skills) {
-        //     return resProject;
-        //   }
+        if (!savedProject.skills) {
+            return resProject;
+          }
       
-        //   savedProject.skills?.then<ResSkill>((skills) => {
-        //     resProject.skills = skills.map((d) => {
-        //       return {
-        //         id: d.id,
-        //         name: d.name      
-        //       };
-        //     });
-        //     this.setStatus(201);
-        //     return resProject;
-        //   });
+          savedProject.skills?.then<ResSkill>((skills) => {
+            resProject.skills = skills.map((d) => {
+              return {
+                id: d.id,
+                name: d.name      
+              };
+            });
+            this.setStatus(201);
+            return resProject;
+          });
       
-        // if (!savedProject.employees) {
-        //     return resProject;
-        //   }
+        if (!savedProject.employees) {
+            return resProject;
+          }
       
-        //   savedProject.employees?.then<ResProject>((employees) => {
-        //     resProject.employees = employees.map((d) => {
-        //       return {
-        //         id: d.id,
-        //         branch: d.branch,
-        //         company: d.company,
-        //         department: d.department,
-        //         firstName: d.first_name,
-        //         lastName: d.last_name,
-        //         password: d.password,
-        //         role: d.role,
-        //         salary: d.salary,
-        //         status: d.status          
-        //       };
-        //     });
-        //     this.setStatus(201);
-        //     return resProject;
-        //   });
+          savedProject.employees?.then<ResProject>((employees) => {
+            resProject.employees = employees.map((d) => {
+              return {
+                id: d.id,
+                branch: d.branch,
+                company: d.company,
+                department: d.department,
+                firstName: d.first_name,
+                lastName: d.last_name,
+                password: d.password,
+                role: d.role,
+                salary: d.salary,
+                status: d.status          
+              };
+            });
+            this.setStatus(201);
+            return resProject;
+          });
       
         return resProject
 

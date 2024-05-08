@@ -16,6 +16,8 @@ import * as jwt from 'jsonwebtoken';
 import { Role } from "entity/Role";
 import { Skill } from "entity/Skill";
 import { In } from "typeorm";
+import { ResSuccess } from "src/models/res/Responses";
+import { ReqEmpSkill } from "src/models/req/ReqEmpSkill";
 @Route('company/{companyId}/branch/{branchId}/department/{departmentId}/employee')
 // @Route('/employee')
 @Tags('Employee')
@@ -34,9 +36,9 @@ export class EmployeeController extends Controller {
         const employees = await this.employeerepository.find({
             where: {
                 company: {
-                    id: req.user.company,
+                    id: req.user?.company,
                     branches: {
-                        id: req.user.branch,
+                        id: req.user?.branch,
                     }
                 }
 
@@ -311,4 +313,24 @@ export class EmployeeController extends Controller {
         loginUser.token = jsonWebtoken;
         return loginUser;
     }
+
+    @Delete('/{employeeId}')
+    public async deleteEmployee(@Path() employeeId: number): Promise<ResSuccess>{
+        const employeeToDelete=await this.employeerepository.findOne({
+            where:{
+                id: employeeId
+            }
+        })
+        if(!employeeToDelete){
+            return Promise.reject(new Error('EMPLOYEE NOT FOUND'))
+        }
+
+        await this.employeerepository.remove(employeeToDelete)
+        return Promise.resolve({result: 'EMPLOYEE DELETED SUCCESSFULLY'})
+    }
+    /**
+     * get employee by skill 
+     * @summary get employee by skill
+     */
+    
 }

@@ -93,8 +93,8 @@ export class Employee {
     @OneToMany(() => (Clockin), (Clockin) => { Clockin.employee })
     clockins?: Clockin[]
 
-    @ManyToOne(() => (Project), (Project) => { Project.employees }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: true })
-    @JoinColumn({ name: 'project_id' })
+    @ManyToMany(() => (Project), (Project) => { Project.employees }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: true })
+    // @JoinColumn({ name: 'project_id' })
     project?: Project
     
 }

@@ -7,7 +7,7 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"ResSkill": {
+			"Project": {
 				"properties": {
 					"id": {
 						"type": "number",
@@ -15,35 +15,139 @@
 					},
 					"name": {
 						"type": "string"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"ReqSkill": {
-				"properties": {
-					"name": {
-						"type": "string"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"ResRole": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
 					},
-					"roleName": {
-						"type": "string"
+					"start_date": {
+						"type": "string",
+						"format": "date-time"
 					},
-					"roleDescription": {
-						"type": "string"
+					"end_date": {
+						"type": "string",
+						"format": "date-time"
 					},
-					"permission": {
+					"skills": {
 						"items": {
-							"$ref": "#/components/schemas/ResPermission"
+							"$ref": "#/components/schemas/Skill"
+						},
+						"type": "array"
+					},
+					"tasks": {
+						"items": {
+							"$ref": "#/components/schemas/Task"
+						},
+						"type": "array"
+					},
+					"employees": {
+						"items": {
+							"$ref": "#/components/schemas/Employee"
+						},
+						"type": "array"
+					},
+					"department": {
+						"$ref": "#/components/schemas/Department"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Employee": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"first_name": {
+						"type": "string"
+					},
+					"last_name": {
+						"type": "string"
+					},
+					"salary": {
+						"type": "number",
+						"format": "double"
+					},
+					"date_of_joining": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"username": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"role": {
+						"$ref": "#/components/schemas/Role"
+					},
+					"department": {
+						"$ref": "#/components/schemas/Department"
+					},
+					"branch": {
+						"$ref": "#/components/schemas/Branch"
+					},
+					"company": {
+						"$ref": "#/components/schemas/Company"
+					},
+					"buddies": {
+						"items": {
+							"$ref": "#/components/schemas/Buddies"
+						},
+						"type": "array"
+					},
+					"skills": {
+						"items": {
+							"$ref": "#/components/schemas/Skill"
+						},
+						"type": "array"
+					},
+					"leaverequests": {
+						"items": {
+							"$ref": "#/components/schemas/LeaveRequest"
+						},
+						"type": "array"
+					},
+					"hrletters": {
+						"items": {
+							"$ref": "#/components/schemas/HRLetters"
+						},
+						"type": "array"
+					},
+					"clockins": {
+						"items": {
+							"$ref": "#/components/schemas/Clockin"
+						},
+						"type": "array"
+					},
+					"project": {
+						"$ref": "#/components/schemas/Project"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Role": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"role_name": {
+						"type": "string"
+					},
+					"role_description": {
+						"type": "string"
+					},
+					"employee": {
+						"items": {
+							"$ref": "#/components/schemas/Employee"
+						},
+						"type": "array"
+					},
+					"permissions": {
+						"items": {
+							"$ref": "#/components/schemas/Permission"
 						},
 						"type": "array"
 					}
@@ -51,7 +155,7 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"ResPermission": {
+			"Permission": {
 				"properties": {
 					"id": {
 						"type": "number",
@@ -63,11 +167,279 @@
 					"permission_description": {
 						"type": "string"
 					},
-					"role": {
+					"roles": {
 						"items": {
-							"$ref": "#/components/schemas/ResRole"
+							"$ref": "#/components/schemas/Role"
 						},
 						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Department": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"employees": {
+						"items": {
+							"$ref": "#/components/schemas/Employee"
+						},
+						"type": "array"
+					},
+					"branch": {
+						"$ref": "#/components/schemas/Branch"
+					},
+					"projects": {
+						"items": {
+							"$ref": "#/components/schemas/Project"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Branch": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"employees": {
+						"items": {
+							"$ref": "#/components/schemas/Employee"
+						},
+						"type": "array"
+					},
+					"departments": {
+						"items": {
+							"$ref": "#/components/schemas/Department"
+						},
+						"type": "array"
+					},
+					"company": {
+						"$ref": "#/components/schemas/Company"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Company": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"logo_url": {
+						"type": "string"
+					},
+					"employees": {
+						"items": {
+							"$ref": "#/components/schemas/Employee"
+						},
+						"type": "array"
+					},
+					"branches": {
+						"items": {
+							"$ref": "#/components/schemas/Branch"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Buddies": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"buddy_group_name": {
+						"type": "string"
+					},
+					"employees": {
+						"items": {
+							"$ref": "#/components/schemas/Employee"
+						},
+						"type": "array"
+					},
+					"buddy_tasks": {
+						"items": {
+							"$ref": "#/components/schemas/BuddyTask"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"BuddyTask": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"buddyTask": {
+						"type": "string"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"startDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"endDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"buddies": {
+						"items": {
+							"$ref": "#/components/schemas/Buddies"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Skill": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"projects": {
+						"items": {
+							"$ref": "#/components/schemas/Project"
+						},
+						"type": "array"
+					},
+					"employees": {
+						"items": {
+							"$ref": "#/components/schemas/Employee"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LeaveRequest": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"reason": {
+						"type": "string"
+					},
+					"from_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"to_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"employee": {
+						"$ref": "#/components/schemas/Employee"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"HRLetters": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"letter_subject": {
+						"type": "string"
+					},
+					"letter_content": {
+						"type": "string"
+					},
+					"letter_time": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"employee": {
+						"$ref": "#/components/schemas/Employee"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Clockin": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"clock_in": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"clock_out": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"employee": {
+						"$ref": "#/components/schemas/Employee"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Task": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"start_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"end_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"project": {
+						"$ref": "#/components/schemas/Project"
 					}
 				},
 				"type": "object",
@@ -122,6 +494,63 @@
 					},
 					"branch": {
 						"$ref": "#/components/schemas/ResBranch"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResRole": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"roleName": {
+						"type": "string"
+					},
+					"roleDescription": {
+						"type": "string"
+					},
+					"permission": {
+						"items": {
+							"$ref": "#/components/schemas/ResPermission"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResPermission": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"permission_name": {
+						"type": "string"
+					},
+					"permission_description": {
+						"type": "string"
+					},
+					"role": {
+						"items": {
+							"$ref": "#/components/schemas/ResRole"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResSkill": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
 					}
 				},
 				"type": "object",
@@ -210,6 +639,84 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"ResTask": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"end_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"name": {
+						"type": "string"
+					},
+					"project": {
+						"$ref": "#/components/schemas/ResProject"
+					},
+					"start_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"status": {
+						"type": "boolean"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ReqTask": {
+				"properties": {
+					"end_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"name": {
+						"type": "string"
+					},
+					"start_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"status": {
+						"type": "boolean",
+						"enum": [
+							false
+						],
+						"nullable": false
+					}
+				},
+				"required": [
+					"name",
+					"start_date",
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ReqSkill": {
+				"properties": {
+					"name": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ReqEmpSkill": {
+				"properties": {
+					"skill": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
 			"ReqProject": {
 				"properties": {
 					"end_date": {
@@ -218,6 +725,13 @@
 					},
 					"name": {
 						"type": "string"
+					},
+					"skills": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array"
 					},
 					"start_date": {
 						"type": "string",
@@ -517,6 +1031,18 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"ResSuccess": {
+				"properties": {
+					"result": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"result"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"ResError": {
 				"properties": {
 					"error": {
@@ -545,18 +1071,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"ResSuccess": {
-				"properties": {
-					"result": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"result"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"ReqCompany": {
 				"properties": {
 					"logo_url": {
@@ -564,444 +1078,6 @@
 					},
 					"name": {
 						"type": "string"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Employee": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"first_name": {
-						"type": "string"
-					},
-					"last_name": {
-						"type": "string"
-					},
-					"salary": {
-						"type": "number",
-						"format": "double"
-					},
-					"date_of_joining": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"username": {
-						"type": "string"
-					},
-					"password": {
-						"type": "string"
-					},
-					"status": {
-						"type": "boolean"
-					},
-					"role": {
-						"$ref": "#/components/schemas/Role"
-					},
-					"department": {
-						"$ref": "#/components/schemas/Department"
-					},
-					"branch": {
-						"$ref": "#/components/schemas/Branch"
-					},
-					"company": {
-						"$ref": "#/components/schemas/Company"
-					},
-					"buddies": {
-						"items": {
-							"$ref": "#/components/schemas/Buddies"
-						},
-						"type": "array"
-					},
-					"skills": {
-						"items": {
-							"$ref": "#/components/schemas/Skill"
-						},
-						"type": "array"
-					},
-					"leaverequests": {
-						"items": {
-							"$ref": "#/components/schemas/LeaveRequest"
-						},
-						"type": "array"
-					},
-					"hrletters": {
-						"items": {
-							"$ref": "#/components/schemas/HRLetters"
-						},
-						"type": "array"
-					},
-					"clockins": {
-						"items": {
-							"$ref": "#/components/schemas/Clockin"
-						},
-						"type": "array"
-					},
-					"project": {
-						"$ref": "#/components/schemas/Project"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Role": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"role_name": {
-						"type": "string"
-					},
-					"role_description": {
-						"type": "string"
-					},
-					"employee": {
-						"items": {
-							"$ref": "#/components/schemas/Employee"
-						},
-						"type": "array"
-					},
-					"permissions": {
-						"items": {
-							"$ref": "#/components/schemas/Permission"
-						},
-						"type": "array"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Permission": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"permission_name": {
-						"type": "string"
-					},
-					"permission_description": {
-						"type": "string"
-					},
-					"roles": {
-						"items": {
-							"$ref": "#/components/schemas/Role"
-						},
-						"type": "array"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Department": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"status": {
-						"type": "boolean"
-					},
-					"employees": {
-						"items": {
-							"$ref": "#/components/schemas/Employee"
-						},
-						"type": "array"
-					},
-					"branch": {
-						"$ref": "#/components/schemas/Branch"
-					},
-					"projects": {
-						"items": {
-							"$ref": "#/components/schemas/Project"
-						},
-						"type": "array"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Branch": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"status": {
-						"type": "boolean"
-					},
-					"employees": {
-						"items": {
-							"$ref": "#/components/schemas/Employee"
-						},
-						"type": "array"
-					},
-					"departments": {
-						"items": {
-							"$ref": "#/components/schemas/Department"
-						},
-						"type": "array"
-					},
-					"company": {
-						"$ref": "#/components/schemas/Company"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Company": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"logo_url": {
-						"type": "string"
-					},
-					"employees": {
-						"items": {
-							"$ref": "#/components/schemas/Employee"
-						},
-						"type": "array"
-					},
-					"branches": {
-						"items": {
-							"$ref": "#/components/schemas/Branch"
-						},
-						"type": "array"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Project": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"start_date": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"end_date": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"skills": {
-						"items": {
-							"$ref": "#/components/schemas/Skill"
-						},
-						"type": "array"
-					},
-					"tasks": {
-						"items": {
-							"$ref": "#/components/schemas/Task"
-						},
-						"type": "array"
-					},
-					"employees": {
-						"items": {
-							"$ref": "#/components/schemas/Employee"
-						},
-						"type": "array"
-					},
-					"department": {
-						"$ref": "#/components/schemas/Department"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Skill": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"projects": {
-						"items": {
-							"$ref": "#/components/schemas/Project"
-						},
-						"type": "array"
-					},
-					"employees": {
-						"items": {
-							"$ref": "#/components/schemas/Employee"
-						},
-						"type": "array"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Task": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"status": {
-						"type": "boolean"
-					},
-					"start_date": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"end_date": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"project": {
-						"$ref": "#/components/schemas/Project"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Buddies": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"buddy_group_name": {
-						"type": "string"
-					},
-					"employees": {
-						"items": {
-							"$ref": "#/components/schemas/Employee"
-						},
-						"type": "array"
-					},
-					"buddy_tasks": {
-						"items": {
-							"$ref": "#/components/schemas/BuddyTask"
-						},
-						"type": "array"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"BuddyTask": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"buddyTask": {
-						"type": "string"
-					},
-					"status": {
-						"type": "boolean"
-					},
-					"startDate": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"endDate": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"buddies": {
-						"items": {
-							"$ref": "#/components/schemas/Buddies"
-						},
-						"type": "array"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"LeaveRequest": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"reason": {
-						"type": "string"
-					},
-					"from_date": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"to_date": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"status": {
-						"type": "boolean"
-					},
-					"employee": {
-						"$ref": "#/components/schemas/Employee"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"HRLetters": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"letter_subject": {
-						"type": "string"
-					},
-					"letter_content": {
-						"type": "string"
-					},
-					"letter_time": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"employee": {
-						"$ref": "#/components/schemas/Employee"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Clockin": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"clock_in": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"clock_out": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"employee": {
-						"$ref": "#/components/schemas/Employee"
 					}
 				},
 				"type": "object",
@@ -1088,6 +1164,83 @@
 		"contact": {}
 	},
 	"paths": {
+		"/project/{projectId}/task/{projectId}": {
+			"get": {
+				"operationId": "GetTask",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Task"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Task"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "projectId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/project/{projectId}/task": {
+			"post": {
+				"operationId": "SaveTask",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResTask"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Task"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "projectId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReqTask"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/skill": {
 			"get": {
 				"operationId": "GetSkills",
@@ -1137,6 +1290,41 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/ReqSkill"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/skill/skillemp": {
+			"post": {
+				"operationId": "GetEmployeeBySkill",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ResEmployee"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Skills"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReqEmpSkill"
 							}
 						}
 					}
@@ -1504,6 +1692,38 @@
 						}
 					}
 				}
+			}
+		},
+		"/company/{companyId}/branch/{branchId}/department/{departmentId}/employee/{employeeId}": {
+			"delete": {
+				"operationId": "DeleteEmployee",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResSuccess"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Employee"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "employeeId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/company/{companyId}/branch/{branchId}/department": {

@@ -9,7 +9,7 @@ export class Task {
     id?: number
 
     @Column({
-        length: 16
+        length: 1024
     })
     name?: string
 

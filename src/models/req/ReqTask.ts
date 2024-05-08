@@ -2,9 +2,9 @@ import { Task } from "entity/Task";
 
 export interface ReqTask{
     end_date?: Date,
-    id: number,
+    // id: number,
     name: string,
-    project: number,
+    // project: number,
     start_date: Date,
     status: false    
 }

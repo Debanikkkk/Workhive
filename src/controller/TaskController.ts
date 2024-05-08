@@ -1,17 +1,47 @@
 import { AppDataSource } from "data-source";
-import { Company } from "entity/Company";
-import { Project } from "entity/Project";
-import { Task } from "entity/Task";
-import { JWTRequest } from "models/req/JWTRequest";
-import { ReqTask } from "models/req/ReqTask";
-import { ResTask } from "models/res/ResTask";
+import { Company } from "src/entity/Company";
+import { Project } from "src/entity/Project";
+import { Task } from "src/entity/Task";
+import { JWTRequest } from "src/models/req/JWTRequest";
+import { ReqTask } from "src/models/req/ReqTask";
+import { ResTask } from "src/models/res/ResTask";
 import { Body, Controller, Get, Path, Post, Request, Route, Tags } from "tsoa";
 @Route('/project/{projectId}/task')
 @Tags('Task')
 export class TaskController extends Controller{
     private taskrepository=AppDataSource.getRepository(Task)
     private projectrepository=AppDataSource.getRepository(Project)
+    @Get('/{projectId}')
+    public async getTask(@Path() projectId: number, ){
+        const tasks=await this.taskrepository.find({
+            where:{
+                project:{
+                    id: projectId
+                }
+            },
+            relations:{
+                project: true
+            }
+        })
 
+        if(!tasks){ 
+            return Promise.reject(new Error('TASK NOT FOUND'))
+        }
+        const taskArr: Task[]=[]
+        for(const task of tasks){
+            taskArr.push({
+                end_date: task.end_date,
+                id: task.id,
+                name: task.name,
+                project: task.project,
+                start_date: task.start_date,
+                status: task.status
+
+            })
+        }
+
+        return taskArr
+    }
     @Post()
     public async saveTask(@Path() projectId: number, @Body() request: ReqTask, @Request() req: JWTRequest):Promise<ResTask>{
         const project=await this.projectrepository.findOne({

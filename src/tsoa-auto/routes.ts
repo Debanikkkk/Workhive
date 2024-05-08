@@ -3,6 +3,8 @@
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { TsoaRoute, fetchMiddlewares, ExpressTemplateService } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { TaskController } from './../controller/TaskController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { SkillsController } from './../controller/SkillsController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { RoleController } from './../controller/RoleController';
@@ -32,41 +34,187 @@ const expressAuthenticationRecasted = expressAuthentication as (req: ExRequest, 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
-    "ResSkill": {
+    "Project": {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double"},
             "name": {"dataType":"string"},
+            "start_date": {"dataType":"datetime"},
+            "end_date": {"dataType":"datetime"},
+            "skills": {"dataType":"array","array":{"dataType":"refObject","ref":"Skill"}},
+            "tasks": {"dataType":"array","array":{"dataType":"refObject","ref":"Task"}},
+            "employees": {"dataType":"array","array":{"dataType":"refObject","ref":"Employee"}},
+            "department": {"ref":"Department"},
         },
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ReqSkill": {
-        "dataType": "refObject",
-        "properties": {
-            "name": {"dataType":"string"},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ResRole": {
+    "Employee": {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double"},
-            "roleName": {"dataType":"string"},
-            "roleDescription": {"dataType":"string"},
-            "permission": {"dataType":"array","array":{"dataType":"refObject","ref":"ResPermission"}},
+            "first_name": {"dataType":"string"},
+            "last_name": {"dataType":"string"},
+            "salary": {"dataType":"double"},
+            "date_of_joining": {"dataType":"datetime"},
+            "username": {"dataType":"string"},
+            "password": {"dataType":"string"},
+            "status": {"dataType":"boolean"},
+            "role": {"ref":"Role"},
+            "department": {"ref":"Department"},
+            "branch": {"ref":"Branch"},
+            "company": {"ref":"Company"},
+            "buddies": {"dataType":"array","array":{"dataType":"refObject","ref":"Buddies"}},
+            "skills": {"dataType":"array","array":{"dataType":"refObject","ref":"Skill"}},
+            "leaverequests": {"dataType":"array","array":{"dataType":"refObject","ref":"LeaveRequest"}},
+            "hrletters": {"dataType":"array","array":{"dataType":"refObject","ref":"HRLetters"}},
+            "clockins": {"dataType":"array","array":{"dataType":"refObject","ref":"Clockin"}},
+            "project": {"ref":"Project"},
         },
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ResPermission": {
+    "Role": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "role_name": {"dataType":"string"},
+            "role_description": {"dataType":"string"},
+            "employee": {"dataType":"array","array":{"dataType":"refObject","ref":"Employee"}},
+            "permissions": {"dataType":"array","array":{"dataType":"refObject","ref":"Permission"}},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Permission": {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double"},
             "permission_name": {"dataType":"string"},
             "permission_description": {"dataType":"string"},
-            "role": {"dataType":"array","array":{"dataType":"refObject","ref":"ResRole"}},
+            "roles": {"dataType":"array","array":{"dataType":"refObject","ref":"Role"}},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Department": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "name": {"dataType":"string"},
+            "status": {"dataType":"boolean"},
+            "employees": {"dataType":"array","array":{"dataType":"refObject","ref":"Employee"}},
+            "branch": {"ref":"Branch"},
+            "projects": {"dataType":"array","array":{"dataType":"refObject","ref":"Project"}},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Branch": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "name": {"dataType":"string"},
+            "status": {"dataType":"boolean"},
+            "employees": {"dataType":"array","array":{"dataType":"refObject","ref":"Employee"}},
+            "departments": {"dataType":"array","array":{"dataType":"refObject","ref":"Department"}},
+            "company": {"ref":"Company"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Company": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "name": {"dataType":"string"},
+            "logo_url": {"dataType":"string"},
+            "employees": {"dataType":"array","array":{"dataType":"refObject","ref":"Employee"}},
+            "branches": {"dataType":"array","array":{"dataType":"refObject","ref":"Branch"}},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Buddies": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "buddy_group_name": {"dataType":"string"},
+            "employees": {"dataType":"array","array":{"dataType":"refObject","ref":"Employee"}},
+            "buddy_tasks": {"dataType":"array","array":{"dataType":"refObject","ref":"BuddyTask"}},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "BuddyTask": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "buddyTask": {"dataType":"string"},
+            "status": {"dataType":"boolean"},
+            "startDate": {"dataType":"datetime"},
+            "endDate": {"dataType":"datetime"},
+            "buddies": {"dataType":"array","array":{"dataType":"refObject","ref":"Buddies"}},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Skill": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "name": {"dataType":"string"},
+            "projects": {"dataType":"array","array":{"dataType":"refObject","ref":"Project"}},
+            "employees": {"dataType":"array","array":{"dataType":"refObject","ref":"Employee"}},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "LeaveRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "reason": {"dataType":"string"},
+            "from_date": {"dataType":"datetime"},
+            "to_date": {"dataType":"datetime"},
+            "status": {"dataType":"boolean"},
+            "employee": {"ref":"Employee"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "HRLetters": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "letter_subject": {"dataType":"string"},
+            "letter_content": {"dataType":"string"},
+            "letter_time": {"dataType":"datetime"},
+            "employee": {"ref":"Employee"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Clockin": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "clock_in": {"dataType":"datetime"},
+            "clock_out": {"dataType":"datetime"},
+            "employee": {"ref":"Employee"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Task": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "name": {"dataType":"string"},
+            "status": {"dataType":"boolean"},
+            "start_date": {"dataType":"datetime"},
+            "end_date": {"dataType":"datetime"},
+            "project": {"ref":"Project"},
         },
         "additionalProperties": false,
     },
@@ -99,6 +247,37 @@ const models: TsoaRoute.Models = {
             "name": {"dataType":"string"},
             "status": {"dataType":"boolean"},
             "branch": {"ref":"ResBranch"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ResRole": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "roleName": {"dataType":"string"},
+            "roleDescription": {"dataType":"string"},
+            "permission": {"dataType":"array","array":{"dataType":"refObject","ref":"ResPermission"}},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ResPermission": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "permission_name": {"dataType":"string"},
+            "permission_description": {"dataType":"string"},
+            "role": {"dataType":"array","array":{"dataType":"refObject","ref":"ResRole"}},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ResSkill": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "name": {"dataType":"string"},
         },
         "additionalProperties": false,
     },
@@ -136,11 +315,52 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ResTask": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "end_date": {"dataType":"datetime"},
+            "name": {"dataType":"string"},
+            "project": {"ref":"ResProject"},
+            "start_date": {"dataType":"datetime"},
+            "status": {"dataType":"boolean"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ReqTask": {
+        "dataType": "refObject",
+        "properties": {
+            "end_date": {"dataType":"datetime"},
+            "name": {"dataType":"string","required":true},
+            "start_date": {"dataType":"datetime","required":true},
+            "status": {"dataType":"enum","enums":[false],"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ReqSkill": {
+        "dataType": "refObject",
+        "properties": {
+            "name": {"dataType":"string"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ReqEmpSkill": {
+        "dataType": "refObject",
+        "properties": {
+            "skill": {"dataType":"array","array":{"dataType":"double"}},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ReqProject": {
         "dataType": "refObject",
         "properties": {
             "end_date": {"dataType":"datetime"},
             "name": {"dataType":"string"},
+            "skills": {"dataType":"array","array":{"dataType":"double"}},
             "start_date": {"dataType":"datetime"},
         },
         "additionalProperties": false,
@@ -280,6 +500,14 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ResSuccess": {
+        "dataType": "refObject",
+        "properties": {
+            "result": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ResError": {
         "dataType": "refObject",
         "properties": {
@@ -298,204 +526,11 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ResSuccess": {
-        "dataType": "refObject",
-        "properties": {
-            "result": {"dataType":"string","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ReqCompany": {
         "dataType": "refObject",
         "properties": {
             "logo_url": {"dataType":"string"},
             "name": {"dataType":"string"},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Employee": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double"},
-            "first_name": {"dataType":"string"},
-            "last_name": {"dataType":"string"},
-            "salary": {"dataType":"double"},
-            "date_of_joining": {"dataType":"datetime"},
-            "username": {"dataType":"string"},
-            "password": {"dataType":"string"},
-            "status": {"dataType":"boolean"},
-            "role": {"ref":"Role"},
-            "department": {"ref":"Department"},
-            "branch": {"ref":"Branch"},
-            "company": {"ref":"Company"},
-            "buddies": {"dataType":"array","array":{"dataType":"refObject","ref":"Buddies"}},
-            "skills": {"dataType":"array","array":{"dataType":"refObject","ref":"Skill"}},
-            "leaverequests": {"dataType":"array","array":{"dataType":"refObject","ref":"LeaveRequest"}},
-            "hrletters": {"dataType":"array","array":{"dataType":"refObject","ref":"HRLetters"}},
-            "clockins": {"dataType":"array","array":{"dataType":"refObject","ref":"Clockin"}},
-            "project": {"ref":"Project"},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Role": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double"},
-            "role_name": {"dataType":"string"},
-            "role_description": {"dataType":"string"},
-            "employee": {"dataType":"array","array":{"dataType":"refObject","ref":"Employee"}},
-            "permissions": {"dataType":"array","array":{"dataType":"refObject","ref":"Permission"}},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Permission": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double"},
-            "permission_name": {"dataType":"string"},
-            "permission_description": {"dataType":"string"},
-            "roles": {"dataType":"array","array":{"dataType":"refObject","ref":"Role"}},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Department": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double"},
-            "name": {"dataType":"string"},
-            "status": {"dataType":"boolean"},
-            "employees": {"dataType":"array","array":{"dataType":"refObject","ref":"Employee"}},
-            "branch": {"ref":"Branch"},
-            "projects": {"dataType":"array","array":{"dataType":"refObject","ref":"Project"}},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Branch": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double"},
-            "name": {"dataType":"string"},
-            "status": {"dataType":"boolean"},
-            "employees": {"dataType":"array","array":{"dataType":"refObject","ref":"Employee"}},
-            "departments": {"dataType":"array","array":{"dataType":"refObject","ref":"Department"}},
-            "company": {"ref":"Company"},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Company": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double"},
-            "name": {"dataType":"string"},
-            "logo_url": {"dataType":"string"},
-            "employees": {"dataType":"array","array":{"dataType":"refObject","ref":"Employee"}},
-            "branches": {"dataType":"array","array":{"dataType":"refObject","ref":"Branch"}},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Project": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double"},
-            "name": {"dataType":"string"},
-            "start_date": {"dataType":"datetime"},
-            "end_date": {"dataType":"datetime"},
-            "skills": {"dataType":"array","array":{"dataType":"refObject","ref":"Skill"}},
-            "tasks": {"dataType":"array","array":{"dataType":"refObject","ref":"Task"}},
-            "employees": {"dataType":"array","array":{"dataType":"refObject","ref":"Employee"}},
-            "department": {"ref":"Department"},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Skill": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double"},
-            "name": {"dataType":"string"},
-            "projects": {"dataType":"array","array":{"dataType":"refObject","ref":"Project"}},
-            "employees": {"dataType":"array","array":{"dataType":"refObject","ref":"Employee"}},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Task": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double"},
-            "name": {"dataType":"string"},
-            "status": {"dataType":"boolean"},
-            "start_date": {"dataType":"datetime"},
-            "end_date": {"dataType":"datetime"},
-            "project": {"ref":"Project"},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Buddies": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double"},
-            "buddy_group_name": {"dataType":"string"},
-            "employees": {"dataType":"array","array":{"dataType":"refObject","ref":"Employee"}},
-            "buddy_tasks": {"dataType":"array","array":{"dataType":"refObject","ref":"BuddyTask"}},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "BuddyTask": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double"},
-            "buddyTask": {"dataType":"string"},
-            "status": {"dataType":"boolean"},
-            "startDate": {"dataType":"datetime"},
-            "endDate": {"dataType":"datetime"},
-            "buddies": {"dataType":"array","array":{"dataType":"refObject","ref":"Buddies"}},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "LeaveRequest": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double"},
-            "reason": {"dataType":"string"},
-            "from_date": {"dataType":"datetime"},
-            "to_date": {"dataType":"datetime"},
-            "status": {"dataType":"boolean"},
-            "employee": {"ref":"Employee"},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "HRLetters": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double"},
-            "letter_subject": {"dataType":"string"},
-            "letter_content": {"dataType":"string"},
-            "letter_time": {"dataType":"datetime"},
-            "employee": {"ref":"Employee"},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Clockin": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double"},
-            "clock_in": {"dataType":"datetime"},
-            "clock_out": {"dataType":"datetime"},
-            "employee": {"ref":"Employee"},
         },
         "additionalProperties": false,
     },
@@ -549,6 +584,68 @@ export function RegisterRoutes(app: Router) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
+        app.get('/project/:projectId/task/:projectId',
+            ...(fetchMiddlewares<RequestHandler>(TaskController)),
+            ...(fetchMiddlewares<RequestHandler>(TaskController.prototype.getTask)),
+
+            async function TaskController_getTask(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    projectId: {"in":"path","name":"projectId","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new TaskController();
+
+              await templateService.apiHandler({
+                methodName: 'getTask',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/project/:projectId/task',
+            ...(fetchMiddlewares<RequestHandler>(TaskController)),
+            ...(fetchMiddlewares<RequestHandler>(TaskController.prototype.saveTask)),
+
+            async function TaskController_saveTask(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    projectId: {"in":"path","name":"projectId","required":true,"dataType":"double"},
+                    request: {"in":"body","name":"request","required":true,"ref":"ReqTask"},
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new TaskController();
+
+              await templateService.apiHandler({
+                methodName: 'saveTask',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/skill',
             ...(fetchMiddlewares<RequestHandler>(SkillsController)),
             ...(fetchMiddlewares<RequestHandler>(SkillsController.prototype.getSkills)),
@@ -597,6 +694,36 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'saveSkill',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/skill/skillemp',
+            ...(fetchMiddlewares<RequestHandler>(SkillsController)),
+            ...(fetchMiddlewares<RequestHandler>(SkillsController.prototype.getEmployeeBySkill)),
+
+            async function SkillsController_getEmployeeBySkill(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"body","name":"request","required":true,"ref":"ReqEmpSkill"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new SkillsController();
+
+              await templateService.apiHandler({
+                methodName: 'getEmployeeBySkill',
                 controller,
                 response,
                 next,
@@ -960,6 +1087,36 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'userLogin',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/company/:companyId/branch/:branchId/department/:departmentId/employee/:employeeId',
+            ...(fetchMiddlewares<RequestHandler>(EmployeeController)),
+            ...(fetchMiddlewares<RequestHandler>(EmployeeController.prototype.deleteEmployee)),
+
+            async function EmployeeController_deleteEmployee(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    employeeId: {"in":"path","name":"employeeId","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new EmployeeController();
+
+              await templateService.apiHandler({
+                methodName: 'deleteEmployee',
                 controller,
                 response,
                 next,

@@ -6,7 +6,7 @@ export interface ReqProject{
     // employees?: number[],
     end_date?: Date,
     name?: string,
-    // skills?: number[],
+    skills?: number[],
     start_date?: Date,
     // tasks?: number[]   
 }
