@@ -150,7 +150,7 @@ export class BuddiesController extends Controller{
             buddy_group_name: updatedBuddies.buddy_group_name,
             // employees:,
         }
-        
+        return resBuddy
     }
             
 }
