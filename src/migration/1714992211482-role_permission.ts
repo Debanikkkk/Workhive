@@ -112,3 +112,4 @@ export class RolePermission1714992211482 implements MigrationInterface {
 //     }
 
 // }
+

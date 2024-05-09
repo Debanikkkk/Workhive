@@ -19,7 +19,7 @@ export const envs: EnvVars = {
   DB_HOST: process.env.DB_HOST || 'localhost',
   DB_PORT: parseInt(process.env.DB_PORT || '5432'),
   DB_USERNAME: process.env.DB_USERNAME || 'postgres',
-  DB_PASSWORD: process.env.DB_PASSWORD || 'root',
+  DB_PASSWORD: process.env.DB_PASSWORD || 'Hardik',
   DB_DBNAME: process.env.DB_DBNAME || 'ems_backend_nb',
   CORS_ALLOWED_ORIGINS: process.env.CORS_ALLOWED_ORIGINS?.split(',') || ['localhost:3009'],
   // CORS_ALLOWED_ORIGINS: [...envs.CORS_ALLOWED_ORIGINS, 'http://localhost:3009'],
