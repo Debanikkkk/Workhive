@@ -298,25 +298,22 @@
 						"type": "number",
 						"format": "double"
 					},
-					"buddyTask": {
+					"buddy_task": {
 						"type": "string"
 					},
 					"status": {
 						"type": "boolean"
 					},
-					"startDate": {
+					"start_date": {
 						"type": "string",
 						"format": "date-time"
 					},
-					"endDate": {
+					"end_date": {
 						"type": "string",
 						"format": "date-time"
 					},
 					"buddies": {
-						"items": {
-							"$ref": "#/components/schemas/Buddies"
-						},
-						"type": "array"
+						"$ref": "#/components/schemas/Buddies"
 					}
 				},
 				"type": "object",
@@ -357,12 +354,10 @@
 						"type": "string"
 					},
 					"from_date": {
-						"type": "string",
-						"format": "date-time"
+						"type": "string"
 					},
 					"to_date": {
-						"type": "string",
-						"format": "date-time"
+						"type": "string"
 					},
 					"status": {
 						"type": "boolean"
@@ -789,12 +784,10 @@
 						"format": "double"
 					},
 					"from_date": {
-						"type": "string",
-						"format": "date-time"
+						"type": "string"
 					},
 					"to_date": {
-						"type": "string",
-						"format": "date-time"
+						"type": "string"
 					},
 					"status": {
 						"type": "boolean"
@@ -812,12 +805,10 @@
 			"ReqLeaveRequest": {
 				"properties": {
 					"from_date": {
-						"type": "string",
-						"format": "date-time"
+						"type": "string"
 					},
 					"to_date": {
-						"type": "string",
-						"format": "date-time"
+						"type": "string"
 					},
 					"status": {
 						"type": "boolean",
@@ -1146,6 +1137,57 @@
 							"$ref": "#/components/schemas/ResEmployee"
 						},
 						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResBuddyTask": {
+				"properties": {
+					"buddies": {
+						"$ref": "#/components/schemas/ResBuddy"
+					},
+					"buddyTask": {
+						"type": "string"
+					},
+					"endDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"startDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"status": {
+						"type": "boolean"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ReqBuddyTask": {
+				"properties": {
+					"buddyTask": {
+						"type": "string"
+					},
+					"endDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"startDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"status": {
+						"type": "boolean"
+					},
+					"buddy": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"type": "object",
@@ -2129,6 +2171,48 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/ReqClockInU"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/buddy/{buddyId}/buddyTask": {
+			"post": {
+				"operationId": "SaveBuddyTask",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResBuddyTask"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"BuddyTask"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "buddyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReqBuddyTask"
 							}
 						}
 					}

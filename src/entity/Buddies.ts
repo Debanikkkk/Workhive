@@ -1,4 +1,4 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Employee } from "./Employee";
 import { BuddyTask } from "./BuddyTask";
 @Entity()
@@ -35,11 +35,11 @@ export class Buddies {
     })
     employees?: Promise<Employee[]>;
 
-    @ManyToMany(() => (BuddyTask), (BuddyTask) => { BuddyTask.buddies }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: true })
-    @JoinTable({
-        name: 'buddies_n_buddy_tasks',
-        joinColumn: { name: 'buddiesId' },
-        inverseJoinColumn: { name: 'buddyTaskId' }
-    })
+    @OneToMany(() => (BuddyTask), (BuddyTask) => { BuddyTask.buddies }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: true })
+    // @JoinTable({
+    //     name: 'buddies_n_buddy_tasks',
+    //     joinColumn: { name: 'buddiesId' },
+    //     inverseJoinColumn: { name: 'buddyTaskId' }
+    // })
     buddy_tasks?: BuddyTask[]
 }

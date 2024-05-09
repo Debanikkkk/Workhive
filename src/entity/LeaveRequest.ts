@@ -12,15 +12,17 @@ export class LeaveRequest {
     reason?: string
 
     @Column({
-        type: 'date'
+        // type: 'date'
+        length: 24
     })
-    from_date?: Date
+    from_date?: string
 
 
     @Column({
-        type: 'date'
+        // type: 'date'
+        length: 24
     })
-    to_date?: Date
+    to_date?: string
 
     @Column({
         // default: false

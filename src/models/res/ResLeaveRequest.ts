@@ -3,8 +3,8 @@ import { ResEmployeeN } from "./ResEmployeeN";
 
 export interface ResLeaveRequest {
     id?: number,
-    from_date?: Date,
-    to_date?: Date,
+    from_date?: string,
+    to_date?: string,
     status?: boolean,
     reason?: string,
     employee?: ResEmployeeN,

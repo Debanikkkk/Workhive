@@ -1,4 +1,4 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Buddies } from "./Buddies";
 @Entity()
 export class BuddyTask {
@@ -8,17 +8,18 @@ export class BuddyTask {
     @Column({
         length: 128
     })
-    buddyTask?: string
+    buddy_task?: string
 
     @Column()
     status?: boolean
 
     @Column()
-    startDate?: Date
+    start_date?: Date
 
     @Column()
-    endDate?: Date
+    end_date?: Date
 
-    @ManyToMany(() => (Buddies), (Buddies) => { Buddies.buddy_tasks })
-    buddies?: Buddies[]
+    @ManyToOne(() => (Buddies), (Buddies) => { Buddies.buddy_tasks })
+    @JoinColumn({name: 'buddy_id'})
+    buddies?: Buddies
 }

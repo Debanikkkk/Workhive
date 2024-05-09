@@ -23,6 +23,8 @@ import { CompanyController } from './../controller/CompanyController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { ClockInController } from './../controller/ClockIInController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { BuddyTaskController } from './../controller/BuddyTaskController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { BuddiesController } from './../controller/BuddiesController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { BranchController } from './../controller/BranchController';
@@ -152,11 +154,11 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double"},
-            "buddyTask": {"dataType":"string"},
+            "buddy_task": {"dataType":"string"},
             "status": {"dataType":"boolean"},
-            "startDate": {"dataType":"datetime"},
-            "endDate": {"dataType":"datetime"},
-            "buddies": {"dataType":"array","array":{"dataType":"refObject","ref":"Buddies"}},
+            "start_date": {"dataType":"datetime"},
+            "end_date": {"dataType":"datetime"},
+            "buddies": {"ref":"Buddies"},
         },
         "additionalProperties": false,
     },
@@ -177,8 +179,8 @@ const models: TsoaRoute.Models = {
         "properties": {
             "id": {"dataType":"double"},
             "reason": {"dataType":"string"},
-            "from_date": {"dataType":"datetime"},
-            "to_date": {"dataType":"datetime"},
+            "from_date": {"dataType":"string"},
+            "to_date": {"dataType":"string"},
             "status": {"dataType":"boolean"},
             "employee": {"ref":"Employee"},
         },
@@ -390,8 +392,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double"},
-            "from_date": {"dataType":"datetime"},
-            "to_date": {"dataType":"datetime"},
+            "from_date": {"dataType":"string"},
+            "to_date": {"dataType":"string"},
             "status": {"dataType":"boolean"},
             "reason": {"dataType":"string"},
             "employee": {"ref":"ResEmployeeN"},
@@ -402,8 +404,8 @@ const models: TsoaRoute.Models = {
     "ReqLeaveRequest": {
         "dataType": "refObject",
         "properties": {
-            "from_date": {"dataType":"datetime"},
-            "to_date": {"dataType":"datetime"},
+            "from_date": {"dataType":"string"},
+            "to_date": {"dataType":"string"},
             "status": {"dataType":"enum","enums":[false]},
             "reason": {"dataType":"string"},
         },
@@ -572,6 +574,31 @@ const models: TsoaRoute.Models = {
             "id": {"dataType":"double"},
             "buddy_group_name": {"dataType":"string"},
             "employees": {"dataType":"array","array":{"dataType":"refObject","ref":"ResEmployee"}},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ResBuddyTask": {
+        "dataType": "refObject",
+        "properties": {
+            "buddies": {"ref":"ResBuddy"},
+            "buddyTask": {"dataType":"string"},
+            "endDate": {"dataType":"datetime"},
+            "id": {"dataType":"double"},
+            "startDate": {"dataType":"datetime"},
+            "status": {"dataType":"boolean"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ReqBuddyTask": {
+        "dataType": "refObject",
+        "properties": {
+            "buddyTask": {"dataType":"string"},
+            "endDate": {"dataType":"datetime"},
+            "startDate": {"dataType":"datetime"},
+            "status": {"dataType":"boolean"},
+            "buddy": {"dataType":"double"},
         },
         "additionalProperties": false,
     },
@@ -1445,6 +1472,37 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'updateClock',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/buddy/:buddyId/buddyTask',
+            ...(fetchMiddlewares<RequestHandler>(BuddyTaskController)),
+            ...(fetchMiddlewares<RequestHandler>(BuddyTaskController.prototype.saveBuddyTask)),
+
+            async function BuddyTaskController_saveBuddyTask(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    buddyId: {"in":"path","name":"buddyId","required":true,"dataType":"double"},
+                    request: {"in":"body","name":"request","required":true,"ref":"ReqBuddyTask"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new BuddyTaskController();
+
+              await templateService.apiHandler({
+                methodName: 'saveBuddyTask',
                 controller,
                 response,
                 next,
