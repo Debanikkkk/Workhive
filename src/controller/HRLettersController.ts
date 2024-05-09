@@ -1,6 +1,7 @@
 import { AppDataSource } from "data-source";
 import { Employee } from "entity/Employee";
 import { HRLetters } from "entity/HRLetters";
+import { ResError } from "src/models/res/Responses";
 import { JWTRequest } from "src/models/req/JWTRequest";
 import { ReqHRLetter } from "src/models/req/ReqHRLetter";
 import { ResHRLetter } from "src/models/res/ResHRLetter";
@@ -12,14 +13,48 @@ export class HRLettersController extends Controller {
     private employeerepository = AppDataSource.getRepository(Employee)
 
     
-    // @Get('/{hrlettersId}')
-    // public async getOneHrLetters(@Path() hrlettersId: number, @Request() req: JWTRequest): Promise<ResHRLetter> {
-    //     const hrletter=await this.hrlettersrepository.findOne({
-    //         where:{
-    //             id: 
-    //         }
-    //     })
-    // }
+    @Get('/{hrlettersId}')
+    public async getOneHrLetters(@Path() hrlettersId: number, @Request() req: JWTRequest): Promise<ResHRLetter | ResError> {
+        const hrletter=await this.hrlettersrepository.findOne({
+            where:{
+                id: hrlettersId,
+                employee:{
+                    company:{
+                        id: req.user?.company
+                    }
+                }
+                
+            },
+            relations:{
+                employee:true
+            }
+        }).then((hrletter)=>{
+            if(!hrletter){
+                return Promise.reject(new Error('HR LETTER NOT FOUND'))
+            }
+            const hrletteremployee=hrletter.employee
+            const reshrletter: ResHRLetter={
+                id: hrletter.id,
+                employee: hrletteremployee,
+                letter_content: hrletter.letter_content,
+                letter_subject: hrletter.letter_subject,
+                letter_time: hrletter.letter_time
+            }
+            if(!reshrletter.employee){
+                return reshrletter
+            }
+
+            reshrletter.employee={
+                id: hrletteremployee?.id,
+                username: hrletteremployee?.username
+            }
+            return reshrletter
+        }, ()=>{
+            this.setStatus(400)
+            return {error: 'err'}
+        })
+        return hrletter
+    }
 
     @Get()
     public async getAllHrLetters(@Request() req: JWTRequest): Promise<ResHRLetter[]> {

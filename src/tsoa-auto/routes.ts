@@ -401,6 +401,14 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ResError": {
+        "dataType": "refObject",
+        "properties": {
+            "error": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ReqLeaveRequest": {
         "dataType": "refObject",
         "properties": {
@@ -508,14 +516,6 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "result": {"dataType":"string","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ResError": {
-        "dataType": "refObject",
-        "properties": {
-            "error": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -903,6 +903,36 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/leaveRequest/:leaveRequestId',
+            ...(fetchMiddlewares<RequestHandler>(LeaveRequestController)),
+            ...(fetchMiddlewares<RequestHandler>(LeaveRequestController.prototype.getOneLeaveRequest)),
+
+            async function LeaveRequestController_getOneLeaveRequest(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    leaveRequestId: {"in":"path","name":"leaveRequestId","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new LeaveRequestController();
+
+              await templateService.apiHandler({
+                methodName: 'getOneLeaveRequest',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/leaveRequest',
             ...(fetchMiddlewares<RequestHandler>(LeaveRequestController)),
             ...(fetchMiddlewares<RequestHandler>(LeaveRequestController.prototype.getAllLeaveRequest)),
@@ -984,6 +1014,37 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'updateLeaveRequest',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/hrletters/:hrlettersId',
+            ...(fetchMiddlewares<RequestHandler>(HRLettersController)),
+            ...(fetchMiddlewares<RequestHandler>(HRLettersController.prototype.getOneHrLetters)),
+
+            async function HRLettersController_getOneHrLetters(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    hrlettersId: {"in":"path","name":"hrlettersId","required":true,"dataType":"double"},
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new HRLettersController();
+
+              await templateService.apiHandler({
+                methodName: 'getOneHrLetters',
                 controller,
                 response,
                 next,
@@ -1597,6 +1658,36 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'saveBuddies',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/buddy',
+            ...(fetchMiddlewares<RequestHandler>(BuddiesController)),
+            ...(fetchMiddlewares<RequestHandler>(BuddiesController.prototype.getAllBuddies)),
+
+            async function BuddiesController_getAllBuddies(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new BuddiesController();
+
+              await templateService.apiHandler({
+                methodName: 'getAllBuddies',
                 controller,
                 response,
                 next,

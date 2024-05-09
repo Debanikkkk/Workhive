@@ -6,12 +6,51 @@ import { JWTRequest } from "src/models/req/JWTRequest";
 import { ReqLeaveRequest } from "src/models/req/ReqLeaveRequest";
 import { ResLeaveRequest } from "src/models/res/ResLeaveRequest";
 import { Body, Controller, Get, Path, Post, Put, Request, Route, Tags } from "tsoa";
+import { ResError } from "src/models/res/Responses";
 // import { EmployeeController } from "./EmployeeController";
 @Tags('Leave_Request')
 @Route('/leaveRequest')
 export class LeaveRequestController extends Controller {
     private leaverequestrepository = AppDataSource.getRepository(LeaveRequest)
     private employeerepository = AppDataSource.getRepository(Employee)
+
+    @Get('/{leaveRequestId}')
+    public async getOneLeaveRequest(@Path() leaveRequestId: number): Promise<ResLeaveRequest | ResError> {
+        const leaverequest=await this.leaverequestrepository.findOne({
+            where:{
+                id: leaveRequestId,
+            },
+            relations:{
+                employee: true
+            }
+        }).then((leaverequest)=>{
+            if(!leaverequest){
+                return Promise.reject(new Error('LEAVE REQUEST NOT FOUND'))
+            }
+            const leaveemployee=leaverequest.employee
+            const resLeaveRequest: ResLeaveRequest={
+                id: leaverequest.id,
+                from_date: leaverequest.from_date,
+                reason: leaverequest.reason,
+                status: leaverequest.status,
+                to_date: leaverequest.to_date,
+                employee: leaveemployee,
+            }
+            if(!resLeaveRequest.employee){
+                return resLeaveRequest
+            }
+
+            resLeaveRequest.employee={
+                id: leaveemployee?.id,
+                username: leaveemployee?.username
+            }
+            return resLeaveRequest
+        }, ()=>{
+            this.setStatus(400)
+            return {error: 'err'}
+        })
+        return leaverequest
+    }
 
     @Get()
     public async getAllLeaveRequest(@Request() req: JWTRequest): Promise<ResLeaveRequest[]> {
