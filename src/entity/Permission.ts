@@ -13,7 +13,8 @@ export class Permission {
     permission_name?: string
 
     @Column({
-        length: 64,
+        length: 1024,
+        nullable: true
     })
     permission_description?: string
 

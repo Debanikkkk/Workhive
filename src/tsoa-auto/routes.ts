@@ -23,6 +23,8 @@ import { CompanyController } from './../controller/CompanyController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { ClockInController } from './../controller/ClockIInController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { BuddiesController } from './../controller/BuddiesController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { BranchController } from './../controller/BranchController';
 import { expressAuthentication } from './../authentication';
 // @ts-ignore - no great way to install types from subpackage
@@ -560,6 +562,25 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "clock_out": {"dataType":"datetime"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ResBuddy": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "buddy_group_name": {"dataType":"string"},
+            "employees": {"dataType":"array","array":{"dataType":"refObject","ref":"ResEmployee"}},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ReqBuddy": {
+        "dataType": "refObject",
+        "properties": {
+            "buddy_group_name": {"dataType":"string"},
+            "buddies": {"dataType":"array","array":{"dataType":"double"},"required":true},
         },
         "additionalProperties": false,
     },
@@ -1424,6 +1445,37 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'updateClock',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/buddy',
+            ...(fetchMiddlewares<RequestHandler>(BuddiesController)),
+            ...(fetchMiddlewares<RequestHandler>(BuddiesController.prototype.saveBuddies)),
+
+            async function BuddiesController_saveBuddies(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"body","name":"request","required":true,"ref":"ReqBuddy"},
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new BuddiesController();
+
+              await templateService.apiHandler({
+                methodName: 'saveBuddies',
                 controller,
                 response,
                 next,

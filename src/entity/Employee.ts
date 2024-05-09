@@ -69,11 +69,7 @@ export class Employee {
     // buddies?: Buddies[]
 
     @ManyToMany(() => (Buddies), (buddies) => { buddies.employees })
-    @JoinTable({
-        name: 'employee_n_buddies',
-        joinColumn: { name: 'employee_id' },
-        inverseJoinColumn: { name: 'buddies_id' }
-    })
+ 
     buddies?: Buddies[];
 
     @ManyToMany(() => (Skill), (Skill) => { Skill.employees })
@@ -87,10 +83,10 @@ export class Employee {
     @OneToMany(() => (LeaveRequest), (LeaveRequest) => { LeaveRequest.employee }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
     leaverequests?: LeaveRequest[]
 
-    @OneToMany(() => (HRLetters), (HRLetters) => { HRLetters.employee }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: false })
+    @OneToMany(() => (HRLetters), (HRLetters) => { HRLetters.employee }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: true })
     hrletters?: HRLetters[]
 
-    @OneToMany(() => (Clockin), (Clockin) => { Clockin.employee })
+    @OneToMany(() => (Clockin), (Clockin) => { Clockin.employee }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: true })
     clockins?: Clockin[]
 
     @ManyToMany(() => (Project), (Project) => { Project.employees }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: true })

@@ -1132,6 +1132,44 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"ResBuddy": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"buddy_group_name": {
+						"type": "string"
+					},
+					"employees": {
+						"items": {
+							"$ref": "#/components/schemas/ResEmployee"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ReqBuddy": {
+				"properties": {
+					"buddy_group_name": {
+						"type": "string"
+					},
+					"buddies": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"buddies"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"ReqBranch": {
 				"properties": {
 					"name": {
@@ -2091,6 +2129,38 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/ReqClockInU"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/buddy": {
+			"post": {
+				"operationId": "SaveBuddies",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResBuddy"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Buddies"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReqBuddy"
 							}
 						}
 					}

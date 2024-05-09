@@ -28,9 +28,14 @@ export class Buddies {
     // employees?: Employee[];
 
     @ManyToMany(() => Employee, employee => employee.buddies, { cascade: true })
-    employees?: Employee[];
+    @JoinTable({
+        name: 'employee_n_buddies',
+        joinColumn: { name: 'buddies_id' },
+        inverseJoinColumn: { name: 'employee_id' }
+    })
+    employees?: Promise<Employee[]>;
 
-    @ManyToMany(() => (BuddyTask), (BuddyTask) => { BuddyTask.buddies })
+    @ManyToMany(() => (BuddyTask), (BuddyTask) => { BuddyTask.buddies }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: true })
     @JoinTable({
         name: 'buddies_n_buddy_tasks',
         joinColumn: { name: 'buddiesId' },
