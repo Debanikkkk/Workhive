@@ -2443,6 +2443,48 @@
 				"parameters": []
 			}
 		},
+		"/buddy/{buddyId}": {
+			"put": {
+				"operationId": "UpdateBuddies",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResBuddy"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Buddies"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "buddyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReqBuddy"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/company/{companyId}/branch": {
 			"get": {
 				"operationId": "GetAllBranch",

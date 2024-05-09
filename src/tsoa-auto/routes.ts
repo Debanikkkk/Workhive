@@ -1699,6 +1699,37 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.put('/buddy/:buddyId',
+            ...(fetchMiddlewares<RequestHandler>(BuddiesController)),
+            ...(fetchMiddlewares<RequestHandler>(BuddiesController.prototype.updateBuddies)),
+
+            async function BuddiesController_updateBuddies(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    buddyId: {"in":"path","name":"buddyId","required":true,"dataType":"double"},
+                    request: {"in":"body","name":"request","required":true,"ref":"ReqBuddy"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new BuddiesController();
+
+              await templateService.apiHandler({
+                methodName: 'updateBuddies',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/company/:companyId/branch',
             ...(fetchMiddlewares<RequestHandler>(BranchController)),
             ...(fetchMiddlewares<RequestHandler>(BranchController.prototype.getAllBranch)),

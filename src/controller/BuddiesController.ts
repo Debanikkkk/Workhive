@@ -118,8 +118,8 @@ export class BuddiesController extends Controller{
         return buddyArr
     }
 
-    @Put()
-    public async updateBuddies(@Path() buddyId: number, @Body() request: ReqBuddy, @Request() req: JWTRequest): Promise<ResBuddy>{
+    @Put('/{buddyId}')
+    public async updateBuddies(@Path() buddyId: number, @Body() request: ReqBuddy): Promise<ResBuddy>{
         const existingbuddy=await this.buddiesrepository.findOne({
             where:{
                 id: buddyId
