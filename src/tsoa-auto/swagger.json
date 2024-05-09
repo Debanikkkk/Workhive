@@ -382,8 +382,7 @@
 						"type": "string"
 					},
 					"letter_time": {
-						"type": "string",
-						"format": "date-time"
+						"type": "string"
 					},
 					"employee": {
 						"$ref": "#/components/schemas/Employee"
@@ -589,10 +588,20 @@
 						"$ref": "#/components/schemas/ResRole"
 					},
 					"skills": {
-						"items": {
-							"$ref": "#/components/schemas/ResSkill"
-						},
-						"type": "array"
+						"anyOf": [
+							{
+								"items": {
+									"$ref": "#/components/schemas/ResSkill"
+								},
+								"type": "array"
+							},
+							{
+								"items": {
+									"$ref": "#/components/schemas/Skill"
+								},
+								"type": "array"
+							}
+						]
 					}
 				},
 				"type": "object",
@@ -846,8 +855,7 @@
 						"type": "string"
 					},
 					"letter_time": {
-						"type": "string",
-						"format": "date-time"
+						"type": "string"
 					},
 					"employee": {
 						"$ref": "#/components/schemas/ResEmployeeN"
@@ -865,8 +873,7 @@
 						"type": "string"
 					},
 					"letter_time": {
-						"type": "string",
-						"format": "date-time"
+						"type": "string"
 					}
 				},
 				"type": "object",
@@ -2178,6 +2185,39 @@
 			}
 		},
 		"/buddy/{buddyId}/buddyTask": {
+			"get": {
+				"operationId": "GetBuddyTask",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ResBuddyTask"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"BuddyTask"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "buddyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
 			"post": {
 				"operationId": "SaveBuddyTask",
 				"responses": {
@@ -2200,6 +2240,57 @@
 					{
 						"in": "path",
 						"name": "buddyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReqBuddyTask"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/buddy/{buddyId}/buddyTask/{buddyTaskId}": {
+			"put": {
+				"operationId": "UpdateBuddyTask",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResBuddyTask"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"BuddyTask"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "buddyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "buddyTaskId",
 						"required": true,
 						"schema": {
 							"format": "double",

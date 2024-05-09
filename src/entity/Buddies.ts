@@ -41,5 +41,5 @@ export class Buddies {
     //     joinColumn: { name: 'buddiesId' },
     //     inverseJoinColumn: { name: 'buddyTaskId' }
     // })
-    buddy_tasks?: BuddyTask[]
+    buddy_tasks?: Promise<BuddyTask[]>
 }

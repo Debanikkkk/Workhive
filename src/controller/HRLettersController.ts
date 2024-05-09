@@ -4,12 +4,22 @@ import { HRLetters } from "entity/HRLetters";
 import { JWTRequest } from "src/models/req/JWTRequest";
 import { ReqHRLetter } from "src/models/req/ReqHRLetter";
 import { ResHRLetter } from "src/models/res/ResHRLetter";
-import { Body, Controller, Get, Post, Request, Route, Tags } from "tsoa";
+import { Body, Controller, Get, Path, Post, Request, Route, Tags } from "tsoa";
 @Tags('HR Letters')
 @Route('/hrletters')
 export class HRLettersController extends Controller {
     private hrlettersrepository = AppDataSource.getRepository(HRLetters)
     private employeerepository = AppDataSource.getRepository(Employee)
+
+    
+    // @Get('/{hrlettersId}')
+    // public async getOneHrLetters(@Path() hrlettersId: number, @Request() req: JWTRequest): Promise<ResHRLetter> {
+    //     const hrletter=await this.hrlettersrepository.findOne({
+    //         where:{
+    //             id: 
+    //         }
+    //     })
+    // }
 
     @Get()
     public async getAllHrLetters(@Request() req: JWTRequest): Promise<ResHRLetter[]> {

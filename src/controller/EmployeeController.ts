@@ -39,6 +39,9 @@ export class EmployeeController extends Controller {
                     id: req.user?.company,
                     branches: {
                         id: req.user?.branch,
+                        departments:{
+                            id: req.user?.department
+                        }
                     }
                 }
 

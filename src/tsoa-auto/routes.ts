@@ -193,7 +193,7 @@ const models: TsoaRoute.Models = {
             "id": {"dataType":"double"},
             "letter_subject": {"dataType":"string"},
             "letter_content": {"dataType":"string"},
-            "letter_time": {"dataType":"datetime"},
+            "letter_time": {"dataType":"string"},
             "employee": {"ref":"Employee"},
         },
         "additionalProperties": false,
@@ -300,7 +300,7 @@ const models: TsoaRoute.Models = {
             "branch": {"ref":"ResBranch"},
             "company": {"ref":"ResCompany"},
             "role": {"ref":"ResRole"},
-            "skills": {"dataType":"array","array":{"dataType":"refObject","ref":"ResSkill"}},
+            "skills": {"dataType":"union","subSchemas":[{"dataType":"array","array":{"dataType":"refObject","ref":"ResSkill"}},{"dataType":"array","array":{"dataType":"refObject","ref":"Skill"}}]},
         },
         "additionalProperties": false,
     },
@@ -426,7 +426,7 @@ const models: TsoaRoute.Models = {
             "id": {"dataType":"double"},
             "letter_content": {"dataType":"string"},
             "letter_subject": {"dataType":"string"},
-            "letter_time": {"dataType":"datetime"},
+            "letter_time": {"dataType":"string"},
             "employee": {"ref":"ResEmployeeN"},
         },
         "additionalProperties": false,
@@ -437,7 +437,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "letter_content": {"dataType":"string"},
             "letter_subject": {"dataType":"string"},
-            "letter_time": {"dataType":"datetime"},
+            "letter_time": {"dataType":"string"},
         },
         "additionalProperties": false,
     },
@@ -573,7 +573,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "id": {"dataType":"double"},
             "buddy_group_name": {"dataType":"string"},
-            "employees": {"dataType":"array","array":{"dataType":"refObject","ref":"ResEmployee"}},
+            "employees": {"dataType":"union","subSchemas":[{"dataType":"array","array":{"dataType":"refObject","ref":"ResEmployee"}},{"dataType":"array","array":{"dataType":"refObject","ref":"ResEmployee"}}]},
         },
         "additionalProperties": false,
     },
@@ -1483,6 +1483,36 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/buddy/:buddyId/buddyTask',
+            ...(fetchMiddlewares<RequestHandler>(BuddyTaskController)),
+            ...(fetchMiddlewares<RequestHandler>(BuddyTaskController.prototype.getBuddyTask)),
+
+            async function BuddyTaskController_getBuddyTask(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    buddyId: {"in":"path","name":"buddyId","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new BuddyTaskController();
+
+              await templateService.apiHandler({
+                methodName: 'getBuddyTask',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/buddy/:buddyId/buddyTask',
             ...(fetchMiddlewares<RequestHandler>(BuddyTaskController)),
             ...(fetchMiddlewares<RequestHandler>(BuddyTaskController.prototype.saveBuddyTask)),
@@ -1503,6 +1533,39 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'saveBuddyTask',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.put('/buddy/:buddyId/buddyTask/:buddyTaskId',
+            ...(fetchMiddlewares<RequestHandler>(BuddyTaskController)),
+            ...(fetchMiddlewares<RequestHandler>(BuddyTaskController.prototype.updateBuddyTask)),
+
+            async function BuddyTaskController_updateBuddyTask(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    buddyId: {"in":"path","name":"buddyId","required":true,"dataType":"double"},
+                    buddyTaskId: {"in":"path","name":"buddyTaskId","required":true,"dataType":"double"},
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+                    request: {"in":"body","name":"request","required":true,"ref":"ReqBuddyTask"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new BuddyTaskController();
+
+              await templateService.apiHandler({
+                methodName: 'updateBuddyTask',
                 controller,
                 response,
                 next,

@@ -19,8 +19,9 @@ export class HRLetters {
     @Column({
         type: 'timestamp',
         default: () => 'CURRENT_TIMESTAMP'
+        // length: 16
     })
-    letter_time?: Date
+    letter_time?: string
 
     @ManyToOne(() => (Employee), (Employee) => { Employee.hrletters }, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
     @JoinColumn({ name: 'employee_id' })

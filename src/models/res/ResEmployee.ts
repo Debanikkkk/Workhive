@@ -1,3 +1,4 @@
+import { Skill } from "src/entity/Skill";
 import { ResBranch } from "./ResBranch";
 import { ResCompany } from "./ResCompany";
 import { ResDepartment } from "./ResDepartment";
@@ -16,5 +17,5 @@ export interface ResEmployee {
     branch?: ResBranch,
     company?: ResCompany,
     role?: ResRole,
-    skills?: ResSkill[]
+    skills?: ResSkill[] | Promise<Skill[]>
 }

@@ -106,7 +106,7 @@ AppDataSource.initialize()
         // Add a list of allowed origins.
         // If you have more origins you would like to add, you can add them to the array below.
         // const allowedOrigins = envs.CORS_ALLOWED_ORIGINS;
-        const allowedOrigins =[...envs.CORS_ALLOWED_ORIGINS, 'http://localhost:3000'];
+        const allowedOrigins =[...envs.CORS_ALLOWED_ORIGINS, 'http://localhost:3001'];
 
         const options: cors.CorsOptions = {
             origin: allowedOrigins,
