@@ -16,9 +16,9 @@ import * as jwt from 'jsonwebtoken';
 import { Role } from "entity/Role";
 import { Skill } from "entity/Skill";
 import { In } from "typeorm";
-import { ResSuccess } from "src/models/res/Responses";
+import { ResError, ResSuccess } from "src/models/res/Responses";
 import { ReqEmpSkill } from "src/models/req/ReqEmpSkill";
-@Route('company/{companyId}/branch/{branchId}/department/{departmentId}/employee')
+@Route('/employee')
 // @Route('/employee')
 @Tags('Employee')
 export class EmployeeController extends Controller {
@@ -30,6 +30,102 @@ export class EmployeeController extends Controller {
     private skillrepository=AppDataSource.getRepository(Skill)
 
     // @Security({ 'Api-token': [] })
+    @Get('/{employeeId}')
+    public async getOneEmployee(@Path() employeeId: number): Promise<ResEmployee | ResError> {
+        const employee=await this.employeerepository.findOne({
+            where:{
+                id: employeeId
+            },
+            relations:{
+                // branch:true,
+                // company: true,
+                // department: true
+                department:{
+                    branch:{
+                    company: true
+                }
+            }
+            }
+        }).then((employee)=>{
+            if(!employee){
+                return Promise.reject(new Error('EMPLYOEE NOT FOUND'))
+            }
+            const branch=employee.branch
+            const company=employee.company
+            const department=employee.department
+            const role=employee.role
+
+            const resEmployee: ResEmployee={
+                
+                firstName: employee.first_name,
+                id: employee.id,
+                lastName: employee.last_name,
+                password: employee.password,
+                salary: employee.salary,
+                status: employee.status,
+                username: employee.username,
+            }
+
+            if(!resEmployee.branch){
+                return resEmployee
+            }
+
+            resEmployee.branch={
+                id: branch?.id,
+                name: branch?.name,
+                status: branch?.status
+                
+            }
+
+            if(!resEmployee.department){
+                return resEmployee
+            }
+
+            resEmployee.department={
+                id: department?.id,
+                name: department?.name,
+                status: department?.status
+            }
+
+            if(!resEmployee.company){
+                return resEmployee
+            }
+
+            resEmployee.company={
+                id: company?.id,
+                name: company?.name,
+                logo_url: company?.logo_url
+            }
+
+            if(!resEmployee.role){
+                return resEmployee
+            }
+
+            resEmployee.role={
+                id: role?.id,
+                roleDescription: role?.role_description,
+                roleName: role?.role_name
+            }
+
+            if (!resEmployee.skills) {
+                return resEmployee;
+              }
+              employee.skills?.then((skills) => {
+                resEmployee.skills = skills;
+              });  
+
+
+              return resEmployee
+        },
+        ()=>{
+            this.setStatus(400)
+            return {error: 'err'}
+        }   
+        
+    )
+    return employee
+
+    }
     @Get()
     public async getAllEmployeeBranch(@Request() req: JWTRequest): Promise<ResEmployee[]> {
 

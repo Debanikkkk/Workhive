@@ -1577,6 +1577,31 @@
 				]
 			}
 		},
+		"/leaveRequest/yourlr": {
+			"post": {
+				"operationId": "GetAllLeaveRequestSelf",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ResLeaveRequest"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leave_Request"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/leaveRequest": {
 			"get": {
 				"operationId": "GetAllLeaveRequest",
@@ -1772,7 +1797,101 @@
 				}
 			}
 		},
-		"/company/{companyId}/branch/{branchId}/department/{departmentId}/employee": {
+		"/hrletters/hrlettersself": {
+			"post": {
+				"operationId": "GetAllHrLettersSelf",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ResHRLetter"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"HR Letters"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/employee/{employeeId}": {
+			"get": {
+				"operationId": "GetOneEmployee",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ResEmployee"
+										},
+										{
+											"$ref": "#/components/schemas/ResError"
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Employee"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "employeeId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeleteEmployee",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResSuccess"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Employee"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "employeeId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/employee": {
 			"get": {
 				"operationId": "GetAllEmployeeBranch",
 				"responses": {
@@ -1827,7 +1946,7 @@
 				}
 			}
 		},
-		"/company/{companyId}/branch/{branchId}/department/{departmentId}/employee/login": {
+		"/employee/login": {
 			"post": {
 				"operationId": "UserLogin",
 				"responses": {
@@ -1857,38 +1976,6 @@
 						}
 					}
 				}
-			}
-		},
-		"/company/{companyId}/branch/{branchId}/department/{departmentId}/employee/{employeeId}": {
-			"delete": {
-				"operationId": "DeleteEmployee",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/ResSuccess"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Employee"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "employeeId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
 			}
 		},
 		"/company/{companyId}/branch/{branchId}/department": {

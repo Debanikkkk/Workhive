@@ -52,6 +52,41 @@ export class LeaveRequestController extends Controller {
         return leaverequest
     }
 
+    @Post('/yourlr')
+    public async getAllLeaveRequestSelf(@Request() req: JWTRequest): Promise<ResLeaveRequest[]> {
+        const leaverequests = await this.leaverequestrepository.find({
+            where: {
+                employee: {
+                    id: req.user?.id,
+                    company: {
+                        id: req.user?.company
+                    }
+                }
+            },
+            relations: {
+                employee: true,
+            }
+        })
+
+        if (!leaverequests) {
+            return Promise.reject(new Error('LEAVE REQUEST NOT FOUND'))
+        }
+
+        const leaverequestArr: ResLeaveRequest[] = []
+
+        for (const leaverequest of leaverequests) {
+            leaverequestArr.push({
+                from_date: leaverequest.from_date,
+                id: leaverequest.id,
+                reason: leaverequest.reason,
+                status: leaverequest.status,
+                to_date: leaverequest.to_date,
+                employee: leaverequest.employee,
+            })
+        }
+        return leaverequestArr
+    }
+
     @Get()
     public async getAllLeaveRequest(@Request() req: JWTRequest): Promise<ResLeaveRequest[]> {
         const leaverequests = await this.leaverequestrepository.find({

@@ -88,6 +88,40 @@ export class HRLettersController extends Controller {
         }
         return hrlettersArr
     }
+
+    @Post('/hrlettersself')
+    public async getAllHrLettersSelf(@Request() req: JWTRequest): Promise<ResHRLetter[]> {
+        const hrletters = await this.hrlettersrepository.find({
+            where: {
+                employee: {
+                    id: req.user?.id,
+                    company: {
+                        id: req.user?.company
+                    }
+                }
+            },
+            relations: {
+                employee: true
+                
+            }
+        })
+        if (!hrletters) {
+            return Promise.reject(new Error('HR LETTERS NOT FOUND'))
+        }
+
+        const hrlettersArr: ResHRLetter[] = []
+
+        for (const hrletter of hrletters) {
+            hrlettersArr.push({
+                id: hrletter.id,
+                letter_content: hrletter.letter_content,
+                letter_subject: hrletter.letter_subject,
+                letter_time: hrletter.letter_time,
+                employee: hrletter.employee
+            })
+        }
+        return hrlettersArr
+    }
     @Post()
     public async saveHrLetters(@Request() req: JWTRequest, @Body() request: ReqHRLetter): Promise<ResHRLetter> {
         const employee = await this.employeerepository.findOne({
