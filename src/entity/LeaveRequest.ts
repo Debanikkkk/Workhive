@@ -20,18 +20,8 @@ export class LeaveRequest {
 
     @Column({
         // type: 'date'
-        // length: 24
-        type: "varchar",
-        transformer: {
-            to: (value: Date | string) => {
-                if (typeof value === 'string') {
-                    return new Date(value).toISOString().split("T")[0];
-                } else {
-                    return value.toISOString().split("T")[0];
-                }
-            },
-            from: (value: string) => new Date(value)
-        }
+        length: 24,
+        nullable: true,
     })
     to_date?: string
 
