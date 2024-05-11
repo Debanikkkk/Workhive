@@ -1903,6 +1903,7 @@
 						}
 					}
 				},
+				"description": "gets all employee in branch",
 				"tags": [
 					"Employee"
 				],

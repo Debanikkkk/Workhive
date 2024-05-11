@@ -126,6 +126,9 @@ export class EmployeeController extends Controller {
     return employee
 
     }
+    /**
+     * gets all employee in branch
+     */
     @Get()
     public async getAllEmployeeBranch(@Request() req: JWTRequest): Promise<ResEmployee[]> {
 
@@ -135,9 +138,6 @@ export class EmployeeController extends Controller {
                     id: req.user?.company,
                     branches: {
                         id: req.user?.branch,
-                        departments:{
-                            id: req.user?.department
-                        }
                     }
                 }
 
@@ -146,9 +146,7 @@ export class EmployeeController extends Controller {
                 branch: true,
                 company: true,
                 department: true,
-                role: {
-                    permissions: true
-                }
+                
             }
         })
 
