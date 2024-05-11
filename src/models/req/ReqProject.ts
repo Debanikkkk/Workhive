@@ -4,9 +4,9 @@ import { ReqTask } from "./ReqTask";
 export interface ReqProject{
     // department?: number,
     // employees?: number[],
-    end_date?: Date,
+    end_date?: string,
     name?: string,
     skills?: number[],
-    start_date?: Date,
+    start_date?: string,
     // tasks?: number[]   
 }

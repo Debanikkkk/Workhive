@@ -31,7 +31,7 @@ export class ProjectController extends Controller{
                 department: true,
                 employees: true,
                 skills: true,
-                tasks: true
+                // tasks: true
             }
         })
 

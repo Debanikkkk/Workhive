@@ -9,9 +9,9 @@ export interface ResProject{
     id?: number,
     department?: ResDepartment,
     employees?: ResEmployee[],
-    end_date?: Date,
+    end_date?: string,
     name?: string,
     skills?: ResSkill[],
-    start_date?: Date,
+    start_date?: string,
     // tasks?: ResTask[]
 }

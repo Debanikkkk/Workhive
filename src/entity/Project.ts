@@ -15,14 +15,16 @@ export class Project {
     name?: string
 
     @Column({
-        type: 'date'
+        // type: 'date'
+        length: 1024
     })
-    start_date?: Date
+    start_date?: string
 
     @Column({
-        type: 'date'
+        // type: 'date'
+        length: 1024
     })
-    end_date?: Date
+    end_date?: string
 
     @ManyToMany(() => (Skill), (Skill) => { Skill.projects }, { onUpdate: "CASCADE", onDelete: "CASCADE", nullable: true })
     @JoinTable({

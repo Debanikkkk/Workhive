@@ -17,12 +17,10 @@
 						"type": "string"
 					},
 					"start_date": {
-						"type": "string",
-						"format": "date-time"
+						"type": "string"
 					},
 					"end_date": {
-						"type": "string",
-						"format": "date-time"
+						"type": "string"
 					},
 					"skills": {
 						"items": {
@@ -623,8 +621,7 @@
 						"type": "array"
 					},
 					"end_date": {
-						"type": "string",
-						"format": "date-time"
+						"type": "string"
 					},
 					"name": {
 						"type": "string"
@@ -636,8 +633,7 @@
 						"type": "array"
 					},
 					"start_date": {
-						"type": "string",
-						"format": "date-time"
+						"type": "string"
 					}
 				},
 				"type": "object",
@@ -724,8 +720,7 @@
 			"ReqProject": {
 				"properties": {
 					"end_date": {
-						"type": "string",
-						"format": "date-time"
+						"type": "string"
 					},
 					"name": {
 						"type": "string"
@@ -738,8 +733,7 @@
 						"type": "array"
 					},
 					"start_date": {
-						"type": "string",
-						"format": "date-time"
+						"type": "string"
 					}
 				},
 				"type": "object",
