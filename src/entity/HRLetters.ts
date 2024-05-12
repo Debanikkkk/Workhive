@@ -17,9 +17,9 @@ export class HRLetters {
     letter_content?: string
 
     @Column({
-        type: 'timestamp',
-        default: () => 'CURRENT_TIMESTAMP'
-        // length: 16
+        // type: 'timestamp',
+        // default: () => 'CURRENT_TIMESTAMP'
+        length: 16
     })
     letter_time?: string
 

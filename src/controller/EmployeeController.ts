@@ -348,6 +348,7 @@ export class EmployeeController extends Controller {
                 company: true,
                 branch: true,
                 department: true,
+              
                 role: {
                     permissions: true,
                 },
@@ -389,8 +390,16 @@ export class EmployeeController extends Controller {
                 role_name: user.role.role_name!,
                 role_description: user.role.role_description!,
             },
-            branch: {},
-            department: {},
+            branch: {
+                id: user.branch?.id,
+                name:user.branch?.name,
+                status:user.branch?.status
+            },
+            department: {
+                id: user.department?.id,
+                name: user.department?.name,
+                status: user.department?.status
+            },
             permissions: permissions,
         };
 
