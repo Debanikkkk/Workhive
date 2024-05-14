@@ -5,7 +5,7 @@ import { ResError } from "src/models/res/Responses";
 import { JWTRequest } from "src/models/req/JWTRequest";
 import { ReqHRLetter } from "src/models/req/ReqHRLetter";
 import { ResHRLetter } from "src/models/res/ResHRLetter";
-import { Body, Controller, Get, Path, Post, Request, Route, Tags } from "tsoa";
+import { Body, Controller, Get, Path, Post, Request, Route, Security, Tags } from "tsoa";
 @Tags('HR Letters')
 @Route('/hrletters')
 export class HRLettersController extends Controller {
@@ -14,6 +14,7 @@ export class HRLettersController extends Controller {
 
     
     @Get('/{hrlettersId}')
+    @Security('Api-Token', [])
     public async getOneHrLetters(@Path() hrlettersId: number, @Request() req: JWTRequest): Promise<ResHRLetter | ResError> {
         const hrletter=await this.hrlettersrepository.findOne({
             where:{
@@ -57,6 +58,7 @@ export class HRLettersController extends Controller {
     }
 
     @Get()
+    @Security('Api-Token', [])
     public async getAllHrLetters(@Request() req: JWTRequest): Promise<ResHRLetter[]> {
         const hrletters = await this.hrlettersrepository.find({
             where: {
@@ -90,6 +92,7 @@ export class HRLettersController extends Controller {
     }
 
     @Post('/hrlettersself')
+    @Security('Api-Token', [])
     public async getAllHrLettersSelf(@Request() req: JWTRequest): Promise<ResHRLetter[]> {
         const hrletters = await this.hrlettersrepository.find({
             where: {
@@ -123,6 +126,7 @@ export class HRLettersController extends Controller {
         return hrlettersArr
     }
     @Post()
+    @Security('Api-Token', [])
     public async saveHrLetters(@Request() req: JWTRequest, @Body() request: ReqHRLetter): Promise<ResHRLetter> {
         const employee = await this.employeerepository.findOne({
             where: {

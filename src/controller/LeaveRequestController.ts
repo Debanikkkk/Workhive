@@ -5,7 +5,7 @@ import { ReqLeaveRequestN } from "src/models/req/ReqLeaveRequestN";
 import { JWTRequest } from "src/models/req/JWTRequest";
 import { ReqLeaveRequest } from "src/models/req/ReqLeaveRequest";
 import { ResLeaveRequest } from "src/models/res/ResLeaveRequest";
-import { Body, Controller, Get, Path, Post, Put, Request, Route, Tags } from "tsoa";
+import { Body, Controller, Get, Path, Post, Put, Request, Route, Security, Tags } from "tsoa";
 import { ResError } from "src/models/res/Responses";
 // import { EmployeeController } from "./EmployeeController";
 @Tags('Leave_Request')
@@ -15,6 +15,7 @@ export class LeaveRequestController extends Controller {
     private employeerepository = AppDataSource.getRepository(Employee)
 
     @Get('/{leaveRequestId}')
+    @Security('Api-Token', [])
     public async getOneLeaveRequest(@Path() leaveRequestId: number): Promise<ResLeaveRequest | ResError> {
         const leaverequest=await this.leaverequestrepository.findOne({
             where:{
@@ -53,6 +54,7 @@ export class LeaveRequestController extends Controller {
     }
 
     @Post('/yourlr')
+    @Security('Api-Token', [])
     public async getAllLeaveRequestSelf(@Request() req: JWTRequest): Promise<ResLeaveRequest[]> {
         const leaverequests = await this.leaverequestrepository.find({
             where: {
@@ -88,6 +90,7 @@ export class LeaveRequestController extends Controller {
     }
 
     @Get()
+    @Security('Api-Token', [])
     public async getAllLeaveRequest(@Request() req: JWTRequest): Promise<ResLeaveRequest[]> {
         const leaverequests = await this.leaverequestrepository.find({
             where: {
@@ -125,6 +128,7 @@ export class LeaveRequestController extends Controller {
      * @summary saves leave requests
      */
     @Post()
+    @Security('Api-Token', [])
     public async saveLeaveRequest(@Body() request: ReqLeaveRequest, @Request() req: JWTRequest): Promise<ResLeaveRequest> {
         console.log({ name: req.user?.id })
         const employee = await this.employeerepository.findOne({
@@ -177,6 +181,7 @@ export class LeaveRequestController extends Controller {
      *  @summary updates leave request
      */
     @Put('/{leaverequestId}')
+    @Security('Api-Token', [])
     public async updateLeaveRequest(@Body() request: ReqLeaveRequestN, @Path() leaverequestId: number): Promise<ResLeaveRequest> {
         const existingleaverequest = await this.leaverequestrepository.findOne({
             where: {

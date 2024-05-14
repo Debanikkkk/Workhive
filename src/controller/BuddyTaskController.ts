@@ -7,13 +7,14 @@ import { ResBuddyTaskStatus } from "models/req/ResBuddyTaskStatus";
 import { compare } from "semver";
 import { ReqBuddyTask } from "src/models/req/ReqBuddyTask";
 import { ResBuddyTask } from "src/models/res/ResBuddyTask";
-import { Body, Controller, Get, Path, Post, Put, Request, Route, Tags } from "tsoa";
+import { Body, Controller, Get, Path, Post, Put, Request, Route, Security, Tags } from "tsoa";
 @Route('buddy/{buddyId}/buddyTask')
 @Tags('BuddyTask')
 export class BuddyTaskController extends Controller{    
 private buddytaskrepository=AppDataSource.getRepository(BuddyTask)
 private buddyrepository=AppDataSource.getRepository(Buddies)
 @Get('/jwt')
+@Security("Api-Token", [])
 public async jwtthing(@Request() req: JWTRequest){
     const resjwt={
         id: req.user.id,
@@ -25,6 +26,7 @@ public async jwtthing(@Request() req: JWTRequest){
     return resjwt
 }
 @Get()
+@Security('Api-Token', [])
 public async getBuddyTask(@Path() buddyId: number): Promise<ResBuddyTask[]>{
     const buddyTask=await this.buddytaskrepository.find({
         where:{

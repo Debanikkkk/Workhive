@@ -6,9 +6,9 @@ export interface ReqEmployee {
     date_of_joining: Date,
     username?: string,
     password?: string,
-    department?: number,
-    branch?: number,
-    company?: number,
+    // department?: number,
+    // branch?: number,
+    // company?: number,
     role?: number,
     skills?: number[]
 }

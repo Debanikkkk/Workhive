@@ -10,7 +10,7 @@ import { JWTRequest } from "src/models/req/JWTRequest";
 import { ReqProject } from "src/models/req/ReqProject";
 import { ResProject } from "src/models/res/ResProject";
 import { ResSkill } from "src/models/res/ResSkill";
-import { Body, Controller, Get, Path, Post, Request, RequestProp, Route, Tags } from "tsoa";
+import { Body, Controller, Get, Path, Post, Request, RequestProp, Route, Security, Tags } from "tsoa";
 import { In } from "typeorm";
 import { Task } from "entity/Task";
 import { ResTask } from "models/res/ResTask";
@@ -95,7 +95,78 @@ export class ProjectController extends Controller{
 //     )
 //         return project
 //     }
+    @Get('/yourProjects')
+    @Security('Api-Token', [])
+    public async getYourProject(@Request() req: JWTRequest): Promise<ResProject[]>{
+        const projects=await this.projectrepository.find({
+            where:{
+                department:{
+                    id: req.user?.department,
+                    branch:{
+                        company:{
+                            employees:{ id: req.user.id,}
+                        }
+                    }
+                }
+            },
+            relations:{
+                department: true,
+                employees: true,
+                skills: true,
+                // tasks: true
+            }
+        })
+        console.log({user: req.user.id})
+        if(!projects){
+            return Promise.reject(new Error('PROJECT NOT FOUND'))
+        }
+
+        const projectArr: ResProject[]=[]
+
+        for(const project of projects){
+
+            const skill= await project.skills;
+            const skillArr: ResSkill[]=[]
+            skill?.forEach((skill)=>{
+                const skilltoresskill: ResSkill={
+                    id: skill.id,
+                    name: skill.name
+                }
+                skillArr.push(skilltoresskill)
+            })
+
+            const employee=await project.employees
+            const employeeArr: ResEmployee[]=[]
+            employee?.forEach((employee)=>{
+                const employeeToResEmployee: ResEmployee={
+                    firstName: employee.first_name,
+                    id: employee.id,
+                    lastName: employee.last_name,
+                    password: employee.password,
+                    role: employee.role,
+                    salary: employee.salary,
+                    status: employee.status,
+                    username: employee.username
+                }
+                employeeArr.push(employeeToResEmployee)
+            })
+
+            projectArr.push({
+                department: project.department,
+                employees: employeeArr,
+                end_date: project.end_date,
+                id: project.id,
+                name: project.name,
+                skills: skillArr,
+                start_date: project.start_date,
+                // tasks: project.tasks
+            })
+        }
+
+        return projectArr
+    }
     @Get()
+    @Security('Api-Token', [])
     public async getAllProject(@Request() req: JWTRequest): Promise<ResProject[]>{
         const projects=await this.projectrepository.find({
             where:{
@@ -160,7 +231,9 @@ export class ProjectController extends Controller{
         return projectArr
     }
 
+
     @Post()
+    @Security('Api-Token', [])
     public async saveProject(@Request() req: JWTRequest, @Body() request: ReqProject){
         const department=await this.departmentrepository.findOne({
             where:{

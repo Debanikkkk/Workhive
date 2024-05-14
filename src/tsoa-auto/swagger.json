@@ -906,18 +906,6 @@
 					"password": {
 						"type": "string"
 					},
-					"department": {
-						"type": "number",
-						"format": "double"
-					},
-					"branch": {
-						"type": "number",
-						"format": "double"
-					},
-					"company": {
-						"type": "number",
-						"format": "double"
-					},
 					"role": {
 						"type": "number",
 						"format": "double"
@@ -1473,6 +1461,35 @@
 				"parameters": []
 			}
 		},
+		"/project/yourProjects": {
+			"get": {
+				"operationId": "GetYourProject",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ResProject"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Project"
+				],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
+				"parameters": []
+			}
+		},
 		"/project": {
 			"get": {
 				"operationId": "GetAllProject",
@@ -1494,7 +1511,11 @@
 				"tags": [
 					"Project"
 				],
-				"security": [],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
 				"parameters": []
 			},
 			"post": {
@@ -1514,7 +1535,11 @@
 				"tags": [
 					"Project"
 				],
-				"security": [],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
@@ -1553,7 +1578,11 @@
 				"tags": [
 					"Leave_Request"
 				],
-				"security": [],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -1588,7 +1617,11 @@
 				"tags": [
 					"Leave_Request"
 				],
-				"security": [],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
 				"parameters": []
 			}
 		},
@@ -1613,7 +1646,11 @@
 				"tags": [
 					"Leave_Request"
 				],
-				"security": [],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
 				"parameters": []
 			},
 			"post": {
@@ -1635,7 +1672,11 @@
 				"tags": [
 					"Leave_Request"
 				],
-				"security": [],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
@@ -1669,7 +1710,11 @@
 				"tags": [
 					"Leave_Request"
 				],
-				"security": [],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -1718,7 +1763,11 @@
 				"tags": [
 					"HR Letters"
 				],
-				"security": [],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -1753,7 +1802,11 @@
 				"tags": [
 					"HR Letters"
 				],
-				"security": [],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
 				"parameters": []
 			},
 			"post": {
@@ -1773,7 +1826,11 @@
 				"tags": [
 					"HR Letters"
 				],
-				"security": [],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
@@ -1808,7 +1865,11 @@
 				"tags": [
 					"HR Letters"
 				],
-				"security": [],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
 				"parameters": []
 			}
 		},
@@ -1903,7 +1964,11 @@
 				"tags": [
 					"Employee"
 				],
-				"security": [],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
 				"parameters": []
 			},
 			"post": {
@@ -1923,7 +1988,11 @@
 				"tags": [
 					"Employee"
 				],
-				"security": [],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
@@ -2370,7 +2439,11 @@
 				"tags": [
 					"BuddyTask"
 				],
-				"security": [],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
 				"parameters": []
 			}
 		},
@@ -2395,7 +2468,11 @@
 				"tags": [
 					"BuddyTask"
 				],
-				"security": [],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -2518,7 +2595,11 @@
 				"tags": [
 					"Buddies"
 				],
-				"security": [],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
@@ -2573,7 +2654,11 @@
 				"tags": [
 					"Buddies"
 				],
-				"security": [],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
 				"parameters": []
 			}
 		},
@@ -2595,7 +2680,11 @@
 				"tags": [
 					"Buddies"
 				],
-				"security": [],
+				"security": [
+					{
+						"Api-Token": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",

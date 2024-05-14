@@ -5,7 +5,7 @@ import { ResEmployee } from "src/models/res/ResEmployee";
 import { JWTRequest } from "src/models/req/JWTRequest";
 import { ReqBuddy } from "src/models/req/ReqBuddy";
 import { ResBuddy } from "src/models/res/ResBuddy";
-import { Body, Controller, Get, Path, Post, Put, Request, Route, Tags } from "tsoa";
+import { Body, Controller, Get, Path, Post, Put, Request, Route, Security, Tags } from "tsoa";
 import { In } from "typeorm";
 @Tags('Buddies')
 @Route('/buddy')
@@ -14,6 +14,7 @@ export class BuddiesController extends Controller{
     private employeerepository=AppDataSource.getRepository(Employee)
 
     @Post()
+    @Security('Api-Token', [])
     public async saveBuddies(@Body() request: ReqBuddy, @Request() req: JWTRequest): Promise<ResBuddy>{
         const {buddies, buddy_group_name}=request
         const buddyArr: Buddies[]=[]
@@ -71,11 +72,12 @@ export class BuddiesController extends Controller{
         return resBuddy
     }
     @Get('/yourbuddies')
+    @Security("Api-Token", [])
     public async getYourBuddies( @Request() req: JWTRequest): Promise<ResBuddy>{
         const buddies=await this.buddiesrepository.findOne({
             where:{
                 employees:{
-                    id: req.user?.id!
+                    id: req.user.id
                 }
             },
             relations:{
@@ -100,7 +102,7 @@ export class BuddiesController extends Controller{
         buddies.employees?.then((employees)=>{
             resBuddy.employees=employees
         })
-
+        console.log({buddies: resBuddy.employees})
         return resBuddy
         }    
         @Get()
@@ -151,6 +153,7 @@ export class BuddiesController extends Controller{
     }
 
     @Put('/{buddyId}')
+    @Security('Api-Token', [])
     public async updateBuddies(@Path() buddyId: number, @Body() request: ReqBuddy): Promise<ResBuddy>{
         const existingbuddy=await this.buddiesrepository.findOne({
             where:{

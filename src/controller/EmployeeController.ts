@@ -130,6 +130,7 @@ export class EmployeeController extends Controller {
      * gets all employee in branch
      */
     @Get()
+    @Security('Api-Token', [])
     public async getAllEmployeeBranch(@Request() req: JWTRequest): Promise<ResEmployee[]> {
 
         const employees = await this.employeerepository.find({
@@ -224,14 +225,18 @@ export class EmployeeController extends Controller {
 
 
     @Post()
+    @Security('Api-Token', [])
     public async saveEmployee(
         // @Path() companyId: number, @Path() branchId: number, @Path() departmentId: number,
-        @Body() request: ReqEmployee) {
+        @Body() request: ReqEmployee, @Request() req: JWTRequest) {
         const department = await this.departmentrepository.findOne({
             where: {
-                id: request.department,
+                id: req.user?.department,
                 branch: {
-                    id: request.branch,
+                    id:req.user?.branch,
+                    company:{
+                        id: req.user?.company
+                    }
                 }
             },
             relations: {
@@ -246,7 +251,7 @@ export class EmployeeController extends Controller {
 
         const company = await this.companyrepository.findOne({
             where: {
-                id: request.company
+                id: req.user?.company
             }
         })
         if (!company) {

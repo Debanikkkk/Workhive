@@ -43,20 +43,22 @@ export class TaskController extends Controller{
         return taskArr
     }
     @Post()
-    public async saveTask(@Path() projectId: number, @Body() request: ReqTask, @Request() req: JWTRequest):Promise<ResTask>{
+    public async saveTask(@Path() projectId: number, @Body() request: ReqTask, 
+    // @Request() req: JWTRequest
+):Promise<ResTask>{
         const project=await this.projectrepository.findOne({
             where:{
                 id: projectId,
-                department:{
-                    id: req.user?.department,
-                    branch:{
-                        id: req.user?.branch,
-                        company:{
-                            id: req.user?.company
-                        }
+                // department:{
+                //     id: req.user?.department,
+                //     branch:{
+                //         id: req.user?.branch,
+                //         company:{
+                //             id: req.user?.company
+                //         }
 
-                    }
-                }
+                //     }
+                // }
               
             }
         })
