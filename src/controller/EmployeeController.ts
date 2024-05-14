@@ -18,7 +18,7 @@ import { Skill } from "entity/Skill";
 import { In } from "typeorm";
 import { ResError, ResSuccess } from "src/models/res/Responses";
 import { ReqEmpSkill } from "src/models/req/ReqEmpSkill";
-@Route('/employee')
+@Route('company/{companyId}/branch/{branchId}/department/{departmentId}/employee')
 // @Route('/employee')
 @Tags('Employee')
 export class EmployeeController extends Controller {
@@ -227,15 +227,18 @@ export class EmployeeController extends Controller {
     @Post()
     // @Security('Api-Token', [])
     public async saveEmployee(
-        // @Path() companyId: number, @Path() branchId: number, @Path() departmentId: number,
+        @Path() companyId: number, @Path() branchId: number, @Path() departmentId: number,
         @Body() request: ReqEmployee, @Request() req: JWTRequest) {
         const department = await this.departmentrepository.findOne({
             where: {
-                id: req.user?.department,
+                // id: req.user?.department,
+                id: departmentId,
                 branch: {
-                    id:req.user?.branch,
+                    // id:req.user?.branch,
+                    id: branchId,
                     company:{
-                        id: req.user?.company
+                        // id: req.user?.company
+                        id: companyId
                     }
                 }
             },
