@@ -906,18 +906,6 @@
 					"password": {
 						"type": "string"
 					},
-					"department": {
-						"type": "number",
-						"format": "double"
-					},
-					"branch": {
-						"type": "number",
-						"format": "double"
-					},
-					"company": {
-						"type": "number",
-						"format": "double"
-					},
 					"role": {
 						"type": "number",
 						"format": "double"
@@ -1885,7 +1873,7 @@
 				"parameters": []
 			}
 		},
-		"/employee/{employeeId}": {
+		"/company/{companyId}/branch/{branchId}/department/{departmentId}/employee/{employeeId}": {
 			"get": {
 				"operationId": "GetOneEmployee",
 				"responses": {
@@ -1954,7 +1942,7 @@
 				]
 			}
 		},
-		"/employee": {
+		"/company/{companyId}/branch/{branchId}/department/{departmentId}/employee": {
 			"get": {
 				"operationId": "GetAllEmployeeBranch",
 				"responses": {
@@ -2000,12 +1988,36 @@
 				"tags": [
 					"Employee"
 				],
-				"security": [
+				"security": [],
+				"parameters": [
 					{
-						"Api-Token": []
+						"in": "path",
+						"name": "companyId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "branchId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "departmentId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
 					}
 				],
-				"parameters": [],
 				"requestBody": {
 					"required": true,
 					"content": {
@@ -2018,7 +2030,7 @@
 				}
 			}
 		},
-		"/employee/login": {
+		"/company/{companyId}/branch/{branchId}/department/{departmentId}/employee/login": {
 			"post": {
 				"operationId": "UserLogin",
 				"responses": {
