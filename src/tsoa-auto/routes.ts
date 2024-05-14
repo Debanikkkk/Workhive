@@ -1708,7 +1708,6 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/buddy/:buddyId/buddyTask',
-            authenticateMiddleware([{"Api-Token":[]}]),
             ...(fetchMiddlewares<RequestHandler>(BuddyTaskController)),
             ...(fetchMiddlewares<RequestHandler>(BuddyTaskController.prototype.getBuddyTask)),
 
@@ -1758,39 +1757,6 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'saveBuddyTask',
-                controller,
-                response,
-                next,
-                validatedArgs,
-                successStatus: undefined,
-              });
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.put('/buddy/:buddyId/buddyTask/:buddyTaskId',
-            ...(fetchMiddlewares<RequestHandler>(BuddyTaskController)),
-            ...(fetchMiddlewares<RequestHandler>(BuddyTaskController.prototype.updateBuddyTask)),
-
-            async function BuddyTaskController_updateBuddyTask(request: ExRequest, response: ExResponse, next: any) {
-            const args: Record<string, TsoaRoute.ParameterSchema> = {
-                    buddyId: {"in":"path","name":"buddyId","required":true,"dataType":"double"},
-                    buddyTaskId: {"in":"path","name":"buddyTaskId","required":true,"dataType":"double"},
-                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
-                    request: {"in":"body","name":"request","required":true,"ref":"ReqBuddyTask"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = templateService.getValidatedArgs({ args, request, response });
-
-                const controller = new BuddyTaskController();
-
-              await templateService.apiHandler({
-                methodName: 'updateBuddyTask',
                 controller,
                 response,
                 next,

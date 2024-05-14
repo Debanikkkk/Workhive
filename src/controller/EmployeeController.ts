@@ -414,11 +414,7 @@ export class EmployeeController extends Controller {
             company: user.company.id!,
             branch: user.branch?.id!,
             department: user.department?.id!,
-            role: {
-                permissions: perm_result!.map<string>((p) => {
-                    return p.permission_name!;
-                }),
-            },
+            role: user.role?.id!
         };
         const jsonWebtoken = jwt.sign(tokenData, envs.JWT_SECRET_KEY);
         loginUser.token = jsonWebtoken;

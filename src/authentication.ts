@@ -21,7 +21,10 @@ export function expressAuthentication(request: express.Request, securityName: st
                     const td: JWTTokenData = decoded;
                     // Check if JWT contains all required scopes
                     for (const scope of scopes ? scopes : []) {
-                        if (!td.role.permissions.includes(scope)) {
+                        // if (!td.role.permissions.includes(scope)) {
+                        //     reject(new Error('JWT does not contain required scope.'));
+                        // }
+                        if (!td.role) {
                             reject(new Error('JWT does not contain required scope.'));
                         }
                     }

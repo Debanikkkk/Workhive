@@ -8,5 +8,6 @@ export interface JWTTokenData {
   company: number,
   branch: number,
   department: number,
-  role: { permissions: string[] };
+  // role: { permissions: string[] };
+  role: number
 }

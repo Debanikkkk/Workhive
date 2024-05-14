@@ -25,8 +25,9 @@ public async jwtthing(@Request() req: JWTRequest){
     console.log(resjwt)
     return resjwt
 }
+
 @Get()
-@Security('Api-Token', [])
+
 public async getBuddyTask(@Path() buddyId: number): Promise<ResBuddyTask[]>{
     const buddyTask=await this.buddytaskrepository.find({
         where:{
@@ -104,66 +105,66 @@ public async saveBuddyTask(@Path() buddyId: number, @Body() request: ReqBuddyTas
     return resBuddyTask
 }
 
-@Put('/{buddyTaskId}')
-public async updateBuddyTask(@Path() buddyId: number, @Path() buddyTaskId: number, @Request() req: JWTRequest, @Body() request: ReqBuddyTask): Promise<ResBuddyTask>{
-    let buddytask=await this.buddytaskrepository.findOne({
-        where:{
-            id: buddyTaskId,
-            buddies:{
-                id: buddyId
-            }
+// @Put('/{buddyTaskId}')
+// public async updateBuddyTask(@Path() buddyId: number, @Path() buddyTaskId: number, @Request() req: JWTRequest, @Body() request: ReqBuddyTask): Promise<ResBuddyTask>{
+//     let buddytask=await this.buddytaskrepository.findOne({
+//         where:{
+//             id: buddyTaskId,
+//             buddies:{
+//                 id: buddyId
+//             }
 
-        }
-    })
+//         }
+//     })
 
-    if(!buddytask){
-        return Promise.reject(new Error('BUDDY TASK NOT FOUND'))
-    }
-    if(req.user.role.permissions.includes('manageTasks')){
-        const {status, buddy, buddyTask,endDate,startDate}=request
+//     if(!buddytask){
+//         return Promise.reject(new Error('BUDDY TASK NOT FOUND'))
+//     }
+//     if(req.user.role.permissions.includes('manageTasks')){
+//         const {status, buddy, buddyTask,endDate,startDate}=request
 
-        buddytask.status=status,
+//         buddytask.status=status,
         
-        buddytask.buddy_task=buddyTask
-        buddytask.end_date=endDate
-        buddytask.start_date=startDate
-        if(buddytask.buddies){
-           const dbbuddy=await this.buddyrepository.findOne({
-            where:{
-                id: buddyId
-            }
-           })
-           if(!dbbuddy){
-            return Promise.reject(new Error('BUDDIES IN DB NOT FOUND'))
+//         buddytask.buddy_task=buddyTask
+//         buddytask.end_date=endDate
+//         buddytask.start_date=startDate
+//         if(buddytask.buddies){
+//            const dbbuddy=await this.buddyrepository.findOne({
+//             where:{
+//                 id: buddyId
+//             }
+//            })
+//            if(!dbbuddy){
+//             return Promise.reject(new Error('BUDDIES IN DB NOT FOUND'))
             
-           }
-           buddytask.buddies=dbbuddy
-        }
+//            }
+//            buddytask.buddies=dbbuddy
+//         }
     
         
         
 
 
-    }
+//     }
 
-    if(req.user.role.permissions.includes('manageTaskStatus')){
-        const {status}=request
+//     if(req.user.role.permissions.includes('manageTaskStatus')){
+//         const {status}=request
 
-        buddytask.status=status
+//         buddytask.status=status
         
-    }
+//     }
 
-    const updatedBuddyTask=await this.buddytaskrepository.save(buddytask)
+//     const updatedBuddyTask=await this.buddytaskrepository.save(buddytask)
 
-    const resBuddyTask: ResBuddyTask={
-        id: updatedBuddyTask.id,
-        buddies: updatedBuddyTask.buddies,
-        buddyTask: updatedBuddyTask.buddy_task,
-        endDate: updatedBuddyTask.end_date,
-        startDate: updatedBuddyTask.start_date,
-        status: updatedBuddyTask.status
-    }
-    return resBuddyTask
-}
+//     const resBuddyTask: ResBuddyTask={
+//         id: updatedBuddyTask.id,
+//         buddies: updatedBuddyTask.buddies,
+//         buddyTask: updatedBuddyTask.buddy_task,
+//         endDate: updatedBuddyTask.end_date,
+//         startDate: updatedBuddyTask.start_date,
+//         status: updatedBuddyTask.status
+//     }
+//     return resBuddyTask
+// }
 
 }
