@@ -225,7 +225,7 @@ export class EmployeeController extends Controller {
 
 
     @Post()
-    @Security('Api-Token', [])
+    // @Security('Api-Token', [])
     public async saveEmployee(
         // @Path() companyId: number, @Path() branchId: number, @Path() departmentId: number,
         @Body() request: ReqEmployee, @Request() req: JWTRequest) {
