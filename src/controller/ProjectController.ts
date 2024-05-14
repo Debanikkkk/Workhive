@@ -3,13 +3,17 @@ import { Department } from "entity/Department";
 import { Employee } from "entity/Employee";
 import { Project } from "entity/Project";
 import { Skill } from "entity/Skill";
-import { ResEmployee } from "models/res/ResEmployee";
+import { response } from "express";
+import { ResEmployee } from "src/models/res/ResEmployee";
+import { ResError } from "src/models/res/Responses";
 import { JWTRequest } from "src/models/req/JWTRequest";
 import { ReqProject } from "src/models/req/ReqProject";
 import { ResProject } from "src/models/res/ResProject";
 import { ResSkill } from "src/models/res/ResSkill";
-import { Body, Controller, Get, Post, Request, RequestProp, Route, Tags } from "tsoa";
+import { Body, Controller, Get, Path, Post, Request, RequestProp, Route, Tags } from "tsoa";
 import { In } from "typeorm";
+import { Task } from "entity/Task";
+import { ResTask } from "models/res/ResTask";
 @Route('/project')
 @Tags('Project')
 export class ProjectController extends Controller{
@@ -18,7 +22,79 @@ export class ProjectController extends Controller{
     private skillrepository=AppDataSource.getRepository(Skill)
     private employeerepository=AppDataSource.getRepository(Employee)
     
-    
+//     @Get('/{projectId}')
+//     public async getOneProject(@Path() projectId: number, 
+//     // @Request() req: JWTRequest
+// ): Promise<ResProject | ResError>{
+//         const project=await this.projectrepository.findOne({
+//             where:{
+//                 id: projectId,
+//             },
+            
+//         }).then((project)=>{
+//             if(!project){
+//                 return Promise.reject(new Error('PROJECT NOT FOUND'))
+//             }
+//             // if(!project.tasks){
+//             //     return Promise.reject(new Error('NO TASKS FOUND'))
+//             // }
+//         //     const taskArr: ResTask[]=[]
+//         //   project.tasks?.then((taske)=>{
+            
+//         //     for(const task of taske){
+//         //         taskArr.push({
+//         //             end_date: task.end_date,
+//         //             id: task.id,
+//         //             name: task.name,
+                    
+//         //             start_date: task.start_date,
+//         //             status: task.status
+//         //         })
+//         //     }
+//         //   })
+//             // const taske=project.tasks
+           
+//             const resProject: ResProject={
+//                 end_date: project.end_date,
+//                 id: project.id,
+//                 name: project.name,                
+//                 start_date: project.start_date,
+//                 // tasks: taskArr,
+//                 // skills: [],
+//                 // employees: [] ,
+//             }
+
+//             // if(!resProject.tasks){
+//             //     return resProject
+//             // }
+//             // project.tasks?.then((task)=>{
+//             //     resProject.tasks!=task
+//             // })
+
+//             // if(!resProject.skills){
+//             //     return resProject
+//             // }
+//             // project.skills?.then((skills)=>{    
+//             //     resProject.skills=skills
+//             // })
+
+//             // if(!resProject.employees){
+//             //     return resProject
+//             // }
+
+//             // project.employees?.then((employee)=>{
+//             //     resProject.employees=employee
+//             // })
+
+//             return resProject
+//         }, 
+//         // ()=>{   
+//         //     this.setStatus(400)
+//         //     return {error:'err'}
+//         // }
+//     )
+//         return project
+//     }
     @Get()
     public async getAllProject(@Request() req: JWTRequest): Promise<ResProject[]>{
         const projects=await this.projectrepository.find({

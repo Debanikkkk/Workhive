@@ -300,7 +300,20 @@ const models: TsoaRoute.Models = {
             "branch": {"ref":"ResBranch"},
             "company": {"ref":"ResCompany"},
             "role": {"ref":"ResRole"},
-            "skills": {"dataType":"union","subSchemas":[{"dataType":"array","array":{"dataType":"refObject","ref":"ResSkill"}},{"dataType":"array","array":{"dataType":"refObject","ref":"Skill"}}]},
+            "skills": {"dataType":"union","subSchemas":[{"dataType":"array","array":{"dataType":"refObject","ref":"ResSkill"}},{"dataType":"array","array":{"dataType":"refObject","ref":"ResSkill"}}]},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ResTask": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double"},
+            "end_date": {"dataType":"datetime"},
+            "name": {"dataType":"string"},
+            "project": {"ref":"ResProject"},
+            "start_date": {"dataType":"datetime"},
+            "status": {"dataType":"boolean"},
         },
         "additionalProperties": false,
     },
@@ -315,19 +328,7 @@ const models: TsoaRoute.Models = {
             "name": {"dataType":"string"},
             "skills": {"dataType":"array","array":{"dataType":"refObject","ref":"ResSkill"}},
             "start_date": {"dataType":"string"},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ResTask": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double"},
-            "end_date": {"dataType":"datetime"},
-            "name": {"dataType":"string"},
-            "project": {"ref":"ResProject"},
-            "start_date": {"dataType":"datetime"},
-            "status": {"dataType":"boolean"},
+            "tasks": {"dataType":"array","array":{"dataType":"refObject","ref":"ResTask"}},
         },
         "additionalProperties": false,
     },
@@ -1634,6 +1635,36 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/buddy/:buddyId/buddyTask/jwt',
+            ...(fetchMiddlewares<RequestHandler>(BuddyTaskController)),
+            ...(fetchMiddlewares<RequestHandler>(BuddyTaskController.prototype.jwtthing)),
+
+            async function BuddyTaskController_jwtthing(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new BuddyTaskController();
+
+              await templateService.apiHandler({
+                methodName: 'jwtthing',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/buddy/:buddyId/buddyTask',
             ...(fetchMiddlewares<RequestHandler>(BuddyTaskController)),
             ...(fetchMiddlewares<RequestHandler>(BuddyTaskController.prototype.getBuddyTask)),
@@ -1748,6 +1779,36 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'saveBuddies',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/buddy/yourbuddies',
+            ...(fetchMiddlewares<RequestHandler>(BuddiesController)),
+            ...(fetchMiddlewares<RequestHandler>(BuddiesController.prototype.getYourBuddies)),
+
+            async function BuddiesController_getYourBuddies(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new BuddiesController();
+
+              await templateService.apiHandler({
+                methodName: 'getYourBuddies',
                 controller,
                 response,
                 next,

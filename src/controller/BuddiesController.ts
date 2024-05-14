@@ -70,8 +70,40 @@ export class BuddiesController extends Controller{
           });
         return resBuddy
     }
+    @Get('/yourbuddies')
+    public async getYourBuddies( @Request() req: JWTRequest): Promise<ResBuddy>{
+        const buddies=await this.buddiesrepository.findOne({
+            where:{
+                employees:{
+                    id: req.user?.id!
+                }
+            },
+            relations:{
+                employees: true
+            }
+        })
+// console.log({id: req.user.id})
+        if(!buddies){
+            return Promise.reject(new Error('BUDDY NOT FOUND'))
+        }
 
-    @Get()
+        const resBuddy: ResBuddy={
+            id: buddies.id,
+            buddy_group_name: buddies.buddy_group_name,
+            employees: [],
+        }
+
+        if(!resBuddy.employees){
+            return resBuddy
+        }
+
+        buddies.employees?.then((employees)=>{
+            resBuddy.employees=employees
+        })
+
+        return resBuddy
+        }    
+        @Get()
     public async getAllBuddies(@Request() req: JWTRequest): Promise<ResBuddy[]>{
         const buddies=await this.buddiesrepository.find({
             where:{

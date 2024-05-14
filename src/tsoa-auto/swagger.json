@@ -586,20 +586,37 @@
 						"$ref": "#/components/schemas/ResRole"
 					},
 					"skills": {
-						"anyOf": [
-							{
-								"items": {
-									"$ref": "#/components/schemas/ResSkill"
-								},
-								"type": "array"
-							},
-							{
-								"items": {
-									"$ref": "#/components/schemas/Skill"
-								},
-								"type": "array"
-							}
-						]
+						"items": {
+							"$ref": "#/components/schemas/ResSkill"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResTask": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"end_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"name": {
+						"type": "string"
+					},
+					"project": {
+						"$ref": "#/components/schemas/ResProject"
+					},
+					"start_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"status": {
+						"type": "boolean"
 					}
 				},
 				"type": "object",
@@ -634,33 +651,12 @@
 					},
 					"start_date": {
 						"type": "string"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"ResTask": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
 					},
-					"end_date": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"name": {
-						"type": "string"
-					},
-					"project": {
-						"$ref": "#/components/schemas/ResProject"
-					},
-					"start_date": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"status": {
-						"type": "boolean"
+					"tasks": {
+						"items": {
+							"$ref": "#/components/schemas/ResTask"
+						},
+						"type": "array"
 					}
 				},
 				"type": "object",
@@ -2344,6 +2340,40 @@
 				}
 			}
 		},
+		"/buddy/{buddyId}/buddyTask/jwt": {
+			"get": {
+				"operationId": "Jwtthing",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"department": {},
+										"branch": {},
+										"company": {},
+										"id": {}
+									},
+									"required": [
+										"department",
+										"branch",
+										"company",
+										"id"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"BuddyTask"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/buddy/{buddyId}/buddyTask": {
 			"get": {
 				"operationId": "GetBuddyTask",
@@ -2513,6 +2543,28 @@
 										"$ref": "#/components/schemas/ResBuddy"
 									},
 									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Buddies"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/buddy/yourbuddies": {
+			"get": {
+				"operationId": "GetYourBuddies",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResBuddy"
 								}
 							}
 						}

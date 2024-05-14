@@ -17,5 +17,5 @@ export interface ResEmployee {
     branch?: ResBranch,
     company?: ResCompany,
     role?: ResRole,
-    skills?: ResSkill[] | Promise<Skill[]>
+    skills?: ResSkill[] | Promise<ResSkill[]>
 }

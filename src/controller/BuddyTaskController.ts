@@ -1,8 +1,10 @@
 import { AppDataSource } from "data-source";
 import { Buddies } from "entity/Buddies";
 import { BuddyTask } from "entity/BuddyTask";
+import { Department } from "entity/Department";
 import { JWTRequest } from "models/req/JWTRequest";
 import { ResBuddyTaskStatus } from "models/req/ResBuddyTaskStatus";
+import { compare } from "semver";
 import { ReqBuddyTask } from "src/models/req/ReqBuddyTask";
 import { ResBuddyTask } from "src/models/res/ResBuddyTask";
 import { Body, Controller, Get, Path, Post, Put, Request, Route, Tags } from "tsoa";
@@ -11,7 +13,17 @@ import { Body, Controller, Get, Path, Post, Put, Request, Route, Tags } from "ts
 export class BuddyTaskController extends Controller{    
 private buddytaskrepository=AppDataSource.getRepository(BuddyTask)
 private buddyrepository=AppDataSource.getRepository(Buddies)
-
+@Get('/jwt')
+public async jwtthing(@Request() req: JWTRequest){
+    const resjwt={
+        id: req.user.id,
+        company: req.user?.company,
+        branch: req.user.branch,
+        department: req.user?.department!
+    }
+    console.log(resjwt)
+    return resjwt
+}
 @Get()
 public async getBuddyTask(@Path() buddyId: number): Promise<ResBuddyTask[]>{
     const buddyTask=await this.buddytaskrepository.find({

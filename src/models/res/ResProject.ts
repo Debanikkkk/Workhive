@@ -13,5 +13,5 @@ export interface ResProject{
     name?: string,
     skills?: ResSkill[],
     start_date?: string,
-    // tasks?: ResTask[]
+    tasks?: ResTask[]
 }
