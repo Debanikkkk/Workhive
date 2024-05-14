@@ -135,19 +135,12 @@ export class EmployeeController extends Controller {
 
         const employees = await this.employeerepository.find({
             where: {
-                company: {
-                    id: req.user?.company,
-                    branches: {
-                        id: req.user?.branch,
-                    }
+              branch:{
+                company:{
+                    id: req.user.company
                 }
+              }
 
-            },
-            relations: {
-                branch: true,
-                company: true,
-                department: true,
-                
             }
         })
 

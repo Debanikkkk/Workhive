@@ -1885,7 +1885,7 @@
 				"parameters": []
 			}
 		},
-		"/company/{companyId}/branch/{branchId}/department/{departmentId}/employee/{employeeId}": {
+		"/employee/{employeeId}": {
 			"get": {
 				"operationId": "GetOneEmployee",
 				"responses": {
@@ -1954,7 +1954,7 @@
 				]
 			}
 		},
-		"/company/{companyId}/branch/{branchId}/department/{departmentId}/employee": {
+		"/employee": {
 			"get": {
 				"operationId": "GetAllEmployeeBranch",
 				"responses": {
@@ -2000,36 +2000,12 @@
 				"tags": [
 					"Employee"
 				],
-				"security": [],
-				"parameters": [
+				"security": [
 					{
-						"in": "path",
-						"name": "companyId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "path",
-						"name": "branchId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "path",
-						"name": "departmentId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
+						"Api-Token": []
 					}
 				],
+				"parameters": [],
 				"requestBody": {
 					"required": true,
 					"content": {
@@ -2042,7 +2018,7 @@
 				}
 			}
 		},
-		"/company/{companyId}/branch/{branchId}/department/{departmentId}/employee/login": {
+		"/employee/login": {
 			"post": {
 				"operationId": "UserLogin",
 				"responses": {

@@ -1219,7 +1219,7 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/company/:companyId/branch/:branchId/department/:departmentId/employee/:employeeId',
+        app.get('/employee/:employeeId',
             ...(fetchMiddlewares<RequestHandler>(EmployeeController)),
             ...(fetchMiddlewares<RequestHandler>(EmployeeController.prototype.getOneEmployee)),
 
@@ -1249,7 +1249,7 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/company/:companyId/branch/:branchId/department/:departmentId/employee',
+        app.get('/employee',
             authenticateMiddleware([{"Api-Token":[]}]),
             ...(fetchMiddlewares<RequestHandler>(EmployeeController)),
             ...(fetchMiddlewares<RequestHandler>(EmployeeController.prototype.getAllEmployeeBranch)),
@@ -1280,15 +1280,13 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/company/:companyId/branch/:branchId/department/:departmentId/employee',
+        app.post('/employee',
+            authenticateMiddleware([{"Api-Token":[]}]),
             ...(fetchMiddlewares<RequestHandler>(EmployeeController)),
             ...(fetchMiddlewares<RequestHandler>(EmployeeController.prototype.saveEmployee)),
 
             async function EmployeeController_saveEmployee(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
-                    companyId: {"in":"path","name":"companyId","required":true,"dataType":"double"},
-                    branchId: {"in":"path","name":"branchId","required":true,"dataType":"double"},
-                    departmentId: {"in":"path","name":"departmentId","required":true,"dataType":"double"},
                     request: {"in":"body","name":"request","required":true,"ref":"ReqEmployee"},
                     req: {"in":"request","name":"req","required":true,"dataType":"object"},
             };
@@ -1314,7 +1312,7 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/company/:companyId/branch/:branchId/department/:departmentId/employee/login',
+        app.post('/employee/login',
             ...(fetchMiddlewares<RequestHandler>(EmployeeController)),
             ...(fetchMiddlewares<RequestHandler>(EmployeeController.prototype.userLogin)),
 
@@ -1344,7 +1342,7 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.delete('/company/:companyId/branch/:branchId/department/:departmentId/employee/:employeeId',
+        app.delete('/employee/:employeeId',
             ...(fetchMiddlewares<RequestHandler>(EmployeeController)),
             ...(fetchMiddlewares<RequestHandler>(EmployeeController.prototype.deleteEmployee)),
 
